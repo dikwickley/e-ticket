@@ -1,18 +1,12 @@
 import mongoose from 'mongoose'
 
 const ParticipantSchema = new mongoose.Schema({
-    name: {
-        type: String
-    },
-    department: {
-        type: String
-    },
     email : {
-        email: String
+        type: String
     },
-    id:{
+    collegeid:{
         type: Number
     }
 })
-
+export {ParticipantSchema}
 export default mongoose.models.Participant || mongoose.model('Participant', ParticipantSchema)

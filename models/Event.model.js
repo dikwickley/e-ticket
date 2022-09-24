@@ -25,5 +25,5 @@ const EventSchema = new mongoose.Schema({
         required: true
     }
 })
-
+export {EventSchema}
 export default mongoose.models.Event || mongoose.model('Event', EventSchema)
