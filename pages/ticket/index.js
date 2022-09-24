@@ -106,7 +106,7 @@ export default function Ticket({ events }) {
     let temp = data;
     temp = { ...data, order: order };
     setData(temp);
-    console.log(data);
+    console.log(temp)
     
     let fields = ["student_name", "student_phone"];
 
@@ -115,8 +115,14 @@ export default function Ticket({ events }) {
         alert(`missing ${fields[x]}`);
         return;
     }
+
+    if(temp.order.length==0){
+      alert(`missing order`);
+        return;
+    }
+    
     data['issue_date'] = new Date()
-    postData(data);
+    postData(temp);
 
     //reload window
   };
