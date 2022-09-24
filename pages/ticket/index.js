@@ -4,7 +4,6 @@ import Event from "../../models/Event.model";
 import dbConnect from "./../../util/db";
 
 export default function Ticket({ events }) {
-  const fieldRef = useRef(null);
   const [data, setData] = useState({});
   const [participants, setParticipants] = useState({});
   const [order, setOrder] = useState([]);
@@ -18,7 +17,7 @@ export default function Ticket({ events }) {
 
   const postData = async (data) => {
     try {
-      const res = await fetch("/api/ticket", {
+      const res = await fetch("/api/order", {
         method: "POST",
         headers: {
           Accept: contentType,
@@ -31,10 +30,11 @@ export default function Ticket({ events }) {
 
       // Throw error with status code in case Fetch API req failed
       if (!res.ok) {
+        alert('some error occured. contact admin.')
         throw new Error(res.status);
-      }
+      } 
 
-      // router.push('/')
+      window.location.reload(false);
     } catch (error) {
       console.log(error);
     }
@@ -108,7 +108,7 @@ export default function Ticket({ events }) {
     setData(temp);
     console.log(temp)
     
-    let fields = ["student_name", "student_phone"];
+    let fields = ["student_name", "student_email","student_phone"];
 
     for (let x = 0; x < fields.length; x += 1)
       if (!formValidate(fields[x], temp)) {
@@ -124,7 +124,6 @@ export default function Ticket({ events }) {
     data['issue_date'] = new Date()
     postData(temp);
 
-    //reload window
   };
 
   return (
@@ -155,6 +154,22 @@ export default function Ticket({ events }) {
                         type="text"
                         name="student_name"
                         id="student_name"
+                        onChange={handleInput}
+                        className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                  }
+
+{
+                    <div className="col-span-6 sm:col-span-3">
+                      <label className="block text-sm font-medium text-gray-700">
+                        Student Email
+                      </label>
+                      <input
+                        ref={fieldRef}
+                        type="text"
+                        name="student_email"
+                        id="student_email"
                         onChange={handleInput}
                         className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />

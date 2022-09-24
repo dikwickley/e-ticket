@@ -26,6 +26,7 @@ export default async function handler(req, res) {
         let _order = req.body.order
         let student_name = req.body.student_name
         let student_phone = req.body.student_phone
+        let student_email = req.body.student_email
         let issue_date = req.body.issue_date
         for(let x=0;x<_order.length;x++){
           let event_data = _order[x].event
@@ -56,7 +57,8 @@ export default async function handler(req, res) {
             tickets: _tickets,
             issue_date,
             student_name,
-            student_phone
+            student_phone,
+            student_email
           }
         )
         res.status(201).json({ success: true, data: order })

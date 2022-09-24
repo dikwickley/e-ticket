@@ -5,7 +5,8 @@ const OrderSchema = new mongoose.Schema({
     tickets: [TicketSchema],
     issue_date: Date,
     student_name: String,
-    student_phone: String
+    student_phone: String,
+    student_email: String
 })
 
 export default mongoose.models.Order || mongoose.model('Order', OrderSchema)
