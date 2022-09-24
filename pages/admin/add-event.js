@@ -44,9 +44,26 @@ export default function AddEvent() {
 
   }
 
+  const formValidate = (field,formData) => {
+   if((field in formData)) return true
+   return false
+  }
+
   const handleSubmit = () => {
     console.log(data)
+
+    let fields = ['name','department','date','price','type']
+
+    for(let x=0;x<fields.length;x+=1)
+      if(!formValidate(fields[x], data)){
+        alert(`missing ${fields[x]}`)
+        return
+      }
+        
+
+
     postData(data)
+
   }
 
   return (
