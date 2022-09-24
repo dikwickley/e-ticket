@@ -20,8 +20,9 @@ export default function AddEvent() {
 
       console.log(res)
 
-      // Throw error with status code in case Fetch API req failed
+
       if (!res.ok) {
+        console.log(res.error)
         throw new Error(res.status)
       }
       
@@ -61,7 +62,7 @@ export default function AddEvent() {
       }
         
 
-
+    // console.log(data)
     postData(data)
 
   }
@@ -163,25 +164,35 @@ export default function AddEvent() {
                     />
                   </div>
 
-                  <div className="col-span-6 sm:col-span-3">
+                  <div className="col-span-6 sm:col-span-3 lg:col-span-2">
                     <label
                       className="block text-sm font-medium text-gray-700"
                     >
-                      Event Type
+                      Number of Participants
                     </label>
-                    <select
-                      id="type"
+                    <input
+                      type="number"
                       name="type"
+                      id="type"
                       onChange={handleInput}
-                      className="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                    >
-                      <option>None</option>
-                      <option>solo</option>
-                      <option>group 2</option>
-                      <option>group 3</option>
-                      <option>group 4</option>
-                    </select>
+                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    />
                   </div>
+
+                  {/* <div className="col-span-6 sm:col-span-3 lg:col-span-2">
+                    <label
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Number of Participants
+                    </label>
+                    <input
+                      type="number"
+                      name="type"
+                      id="type"
+                      onChange={handleInput}
+                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    />
+                  </div> */}
                 </div>
               </div>
               <div className="px-4 py-3 text-right bg-gray-50 sm:px-6">

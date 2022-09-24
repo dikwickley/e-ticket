@@ -6,12 +6,13 @@ import dbConnect from './../../util/db'
 export default function Ticket({events}) {
 
   const [data, setData] = useState({})
+  const [currentEvent, setCurrentEvent] = useState(null)
   const contentType = 'application/json'
   const router = useRouter()
 
   useEffect(()=>{
-    console.log({events})
-  },[])
+    console.log(currentEvent)
+  },[currentEvent])
 
   const postData = async (data) => {
     try {
@@ -50,13 +51,13 @@ export default function Ticket({events}) {
 
   }
 
-  const handleSelectEvent = (event) => {
-    
+  const handleSelectEvent = (e) => {
+    setCurrentEvent(events[e.target.value])
   }
 
   const handleSubmit = () => {
     console.log(data)
-    postData(data)
+    // postData(data)
   }
 
   return (
@@ -83,22 +84,36 @@ export default function Ticket({events}) {
                     <label
                       className="block text-sm font-medium text-gray-700"
                     >
-                      Department
+                      Event
                     </label>
                     <select
                       id="department"
                       name="department"
-                      onChange={handleInput}
+                      onChange={handleSelectEvent}
                       className="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                     >
                       <option>None</option>
                       {
                         events.map((event, index) => {
-                            return <option key={index} value={`${event._id}`}>{event.name}</option>
+                            return <option key={index} value={`${index}`}>{event.name}</option>
                         })
                       }
-
                     </select>
+                  </div>
+
+                  <div className="col-span-6 sm:col-span-3">
+                    <label
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Participants
+                    </label>
+                    <input
+                      type="text"
+                      name="participants"
+                      id="participants"
+                      onChange={handleInput}
+                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    />
                   </div>
 
                
@@ -108,13 +123,22 @@ export default function Ticket({events}) {
                 <button
                   type="submit"
                   onClick={handleSubmit}
+                  className="inline-flex justify-center px-4 py-2 mx-4 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                >
+                  Add Event
+                </button>
+                <button
+                  type="submit"
+                  onClick={handleSubmit}
                   className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
-                  Save
+                  Create Ticket
                 </button>
               </div>
             </div>
           </div>
+
+          
         </div>
       </div>
     </div>

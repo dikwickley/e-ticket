@@ -7,6 +7,9 @@ const ParticipantSchema = new mongoose.Schema({
     department: {
         type: String
     },
+    email : {
+        email: String
+    },
     id:{
         type: Number
     }

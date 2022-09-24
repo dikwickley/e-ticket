@@ -12,7 +12,7 @@ export default async function handler(req, res) {
         const events = await Event.find({}) /* find all the data in our database */
         res.status(200).json({ success: true, data: events })
       } catch (error) {
-        res.status(400).json({ success: false })
+        res.status(400).json({ success: false, error: error })
       }
       break
     case 'POST':
@@ -22,11 +22,11 @@ export default async function handler(req, res) {
         )
         res.status(201).json({ success: true, data: event })
       } catch (error) {
-        res.status(400).json({ success: false })
+        res.status(400).json({ success: false , error: error})
       }
       break
     default:
-      res.status(400).json({ success: false })
+      res.status(400).json({ success: false})
       break
   }
 }

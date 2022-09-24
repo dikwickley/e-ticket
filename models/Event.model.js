@@ -11,7 +11,6 @@ const EventSchema = new mongoose.Schema({
     },
     description: {
         type: String,
-        required: true
     },
     date:{
         type: Date,
@@ -22,7 +21,7 @@ const EventSchema = new mongoose.Schema({
         required: true,
     },
     type:{
-        type: String,
+        type: Number,
         required: true
     }
 })
