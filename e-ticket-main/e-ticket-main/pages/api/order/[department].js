@@ -15,16 +15,16 @@ export default async function handler(req,res){
     switch (method) {
         case 'GET':
             try {
-                let orderData = await Order.find({"tickets.events.department":department}); // searching department wise entries
+                // department wise tickets data
+                let orderData = await Order.find({"tickets.events.department":department}, {tickets: {$elemMatch:{'events.department':department}}})
+
                 if(!orderData || orderData == "") res.status(200).json({success:true,"Message":"No data for given department"});
                 else{
                     var temp = JSON.stringify(orderData); // to get correct json structure
                     temp = JSON.parse(temp); // to get correct json structure
                     // fields as labels for csv download 
                     const fields = [ 
-                        "student_name",
-                        "student_phone",
-                        "student_email",
+                        {lael:"ticket:id",value:"tickets._id"},
                         {label:"events:name",value:"tickets.events.name"},
                         {label:"events:department",value:"tickets.events.department"},
                         {label:"events:price",value:"tickets.events.price"},
