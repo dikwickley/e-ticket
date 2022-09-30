@@ -6,7 +6,10 @@ const OrderSchema = new mongoose.Schema({
     issue_date: Date,
     student_name: String,
     student_phone: String,
-    student_email: String
+    student_email: String,
+    payment_mode:String,
+    tarnsection_id:String,
+    
 })
 
 export default mongoose.models.Order || mongoose.model('Order', OrderSchema)

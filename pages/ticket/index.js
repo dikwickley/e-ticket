@@ -9,19 +9,30 @@ export default function Ticket({ events }) {
   const [order, setOrder] = useState([]);
   const [currentEvent, setCurrentEvent] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [totalOrder, setTotalOrder] = useState(0);
+  const [transection, setTransection] = useState(false);
 
   const contentType = "application/json";
   const router = useRouter();
   const fieldRef = useRef(null);
   useEffect(() => {
-    console.log(order);
+    setTotalOrder(0);
+    console.log("Order", order);
+    console.log("Length", order.length);
+    for (let i = 0; i < order.length; i += 1) {
+      console.log("in for loop");
+      console.log(`Here ${i}`, order[i].event.price);
+      setTotalOrder(totalOrder + order[i].event.price);
+    }
   }, [order]);
 
   //regex pattern
   const re_st = /(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/;
-  const re_email =/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-  const re_ph =/^(?:(?:\+|0{0,2})91(\s*|[\-])?|[0]?)?([6789]\d{2}([ -]?)\d{3}([ -]?)\d{4})$/;
-  const re_id=/^[0-9]{2}[a-zA-Z]{2}[0-9]{3}$/;
+  const re_email =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  const re_ph =
+    /^(?:(?:\+|0{0,2})91(\s*|[\-])?|[0]?)?([6789]\d{2}([ -]?)\d{3}([ -]?)\d{4})$/;
+  const re_id = /^[0-9]{2}[a-zA-Z]{2}[0-9]{3}$/;
 
   const postData = async (data) => {
     try {
@@ -42,7 +53,7 @@ export default function Ticket({ events }) {
         throw new Error(res.status);
       }
 
-      window.location.reload(false);
+      // window.location.reload(false);
     } catch (error) {
       // console.log(error);
     }
@@ -74,8 +85,17 @@ export default function Ticket({ events }) {
       temp[inputname] = value;
       setData(temp);
     }
-
-    // console.log(data);
+    console.log(data.payment_mode);
+    if (data.payment_mode === "Online") {
+      setTransection(true);
+    } else if (data.payment_mode === "Offline") {
+      console.log("before", data.tarnsection_id);
+      setTransection(false);
+      data.tarnsection_id = "";
+    } else if (data.payment_mode === "none") {
+      setTransection(false);
+      alert("Please Select a Payment method.");
+    }
   };
 
   const handleParticipant = (event, index) => {
@@ -95,7 +115,6 @@ export default function Ticket({ events }) {
   const handleSelectEvent = (e) => {
     setCurrentEvent(events[e.target.value]);
     console.log("Value of event is : ", e.target.value);
-    //setdefaultEvent(e.target.value);
   };
 
   const handleAdd = () => {
@@ -105,8 +124,8 @@ export default function Ticket({ events }) {
         bool = false;
         alert(`Invalid Email : ${val.email}`);
       }
-      if(!re_id.test(val.collegeid)){
-        bool=false;
+      if (!re_id.test(val.collegeid)) {
+        bool = false;
         alert(`Invalid id : ${val.collegeid}`);
       }
     });
@@ -127,11 +146,12 @@ export default function Ticket({ events }) {
     let temp = data;
     temp = { ...data, order: order };
     setData(temp);
-    //console.log(temp)
+    console.log("Main", data);
     if (
       temp["student_name"] &&
       temp["student_email"] &&
-      temp["student_phone"]
+      temp["student_phone"] &&
+      data.payment_mode
     ) {
       //validation part
       if (!re_st.test(temp["student_name"])) {
@@ -140,6 +160,8 @@ export default function Ticket({ events }) {
         alert("Invalid Email");
       } else if (!re_ph.test(temp["student_phone"])) {
         alert("Invali Phone Number");
+      } else if (data.payment_mode === "None") {
+        alert("Please select a payment mode");
       } else {
         //alert(temp["student_name"]);
         let fields = ["student_name", "student_email", "student_phone"];
@@ -186,32 +208,58 @@ export default function Ticket({ events }) {
                 </div>
 
                 {/* table started */}
-                <div class="flex flex-col">
-                  <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div class="py-4 inline-block min-w-full sm:px-6 lg:px-8">
-                      <div class="overflow-hidden">
-                        <table class="min-w-full text-center">
-                          <tr class="border-b bg-gray-800">
-                            <td class="text-base text-white font-medium px-6 py-4 whitespace-nowrap">
+                <div className="flex flex-col">
+                  <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div className="py-4 inline-block min-w-full sm:px-6 lg:px-8">
+                      <div className="overflow-hidden">
+                        <table className="min-w-full text-center">
+                          <tr className="border-b bg-gray-800">
+                            <td className="text-base text-white font-medium px-6 py-4 whitespace-nowrap">
                               Student Name
                             </td>
-                            <td class="text-base text-white font-medium px-6 py-4 whitespace-nowrap">
+                            <td className="text-base text-white font-medium px-6 py-4 whitespace-nowrap">
                               Student Email
                             </td>
-                            <td class="text-base text-white font-medium px-6 py-4 whitespace-nowrap">
+                            <td className="text-base text-white font-medium px-6 py-4 whitespace-nowrap">
                               Student Phone
                             </td>
                           </tr>
 
-                          <tr class="bg-white border-b">
-                            <td class="text-base text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
+                          <tr className="bg-white border-b">
+                            <td className="text-base text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
                               {data.student_name}
                             </td>
-                            <td class="text-base text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
+                            <td className="text-base text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
                               {data.student_email}
                             </td>
-                            <td class="text-base text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
+                            <td className="text-base text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
                               {data.student_phone}
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex flex-col">
+                  <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div className="py-4 inline-block min-w-full sm:px-6 lg:px-8">
+                      <div className="overflow-hidden">
+                        <table className="min-w-full text-center">
+                          <tr className="border-b bg-gray-800">
+                            <td className="text-base text-white font-medium px-6 py-4 whitespace-nowrap">
+                              Payment Method
+                            </td>
+                            <td className="text-base text-white font-medium px-6 py-4 whitespace-nowrap">
+                              {data.payment_mode}
+                            </td>
+                          </tr>
+                          <tr className="border-b bg-gray-800">
+                            <td className="text-base text-white font-medium px-6 py-4 whitespace-nowrap">
+                              Order Total
+                            </td>
+                            <td className="text-base text-white font-medium px-6 py-4 whitespace-nowrap">
+                              {totalOrder}
                             </td>
                           </tr>
                         </table>
@@ -221,43 +269,44 @@ export default function Ticket({ events }) {
                 </div>
                 {/* table ended */}
                 {order.map((value, index) => {
-                  //console.log("Participants : ", value.participants);
                   return (
                     <>
-                      <div class="flex flex-col">
-                        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                          <div class="py-4 inline-block min-w-full sm:px-6 lg:px-8">
-                            <div class="overflow-hidden">
-                              <table class="min-w-full text-center">
-                                <thead class="border-b bg-gray-800">
+                      <div className="flex flex-col">
+                        <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                          <div className="py-4 inline-block min-w-full sm:px-6 lg:px-8">
+                            <div className="overflow-hidden">
+                              <table className="min-w-full text-center">
+                                <thead className="border-b bg-gray-800">
                                   <tr>
                                     <td
                                       colSpan="4"
-                                      class="text-lg font-medium text-white px-6 py-4 whitespace-nowrap text-center"
+                                      className="text-lg font-medium text-white px-6 py-4 whitespace-nowrap text-center"
                                     >
-                                      {value.event.name}
+                                      {value.event.name} ( price ={" "}
+                                      {value.event.price} )
                                     </td>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr class="border-b bg-indigo-100 border-indigo-200">
-                                    <td class="text-base text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
+                                  <tr className="border-b bg-indigo-100 border-indigo-200">
+                                    <td className="text-base text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
                                       ID
                                     </td>
-                                    <td class="text-base text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
+                                    <td className="text-base text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
                                       Email
                                     </td>
                                   </tr>
+
                                   {/* Fetching the data of participants */}
                                   {Object.entries(value.participants).map(
                                     ([key, val]) => {
                                       return (
                                         <>
-                                          <tr class="bg-white border-b">
-                                            <td class="text-base text-gray-900 font-lg px-6 py-4 whitespace-nowrap">
+                                          <tr className="bg-white border-b">
+                                            <td className="text-base text-gray-900 font-lg px-6 py-4 whitespace-nowrap">
                                               {val.collegeid}
                                             </td>
-                                            <td class="text-base text-gray-900 font-lg px-6 py-4 whitespace-nowrap">
+                                            <td className="text-base text-gray-900 font-lg px-6 py-4 whitespace-nowrap">
                                               {val.email}
                                             </td>
                                           </tr>
@@ -360,7 +409,44 @@ export default function Ticket({ events }) {
                         />
                       </div>
                     }
-
+                    {
+                      <div className="col-span-6 sm:col-span-6">
+                        <label className="block text-sm font-medium text-gray-700">
+                          Payment Method
+                        </label>
+                        <select
+                          id="payment_mode"
+                          name="payment_mode"
+                          onChange={handleInput}
+                          //onChange={()=>{handleInput();handleSelectEvent()}}
+                          className="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                          required
+                        >
+                          <option value="None">None</option>
+                          <option value="Online">Online</option>
+                          <option value="Offline">Offline</option>
+                        </select>
+                      </div>
+                    }
+                    {transection ? (
+                      <>
+                        <div className="col-span-6 sm:col-span-3">
+                          <label className="block text-sm font-medium text-gray-700">
+                            Enter Transection Id
+                          </label>
+                          <input
+                            ref={fieldRef}
+                            type="text"
+                            name="tarnsection_id"
+                            id="tarnsection_id"
+                            onChange={handleInput}
+                            placeholder="Enter the transection id "
+                            className="block w-96 mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            required
+                          />
+                        </div>
+                      </>
+                    ) : null}
                     <div className="col-span-6 sm:col-span-6">
                       <label className="block text-sm font-medium text-gray-700">
                         Event
