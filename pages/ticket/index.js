@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Event from "../../models/Event.model";
 import dbConnect from "./../../util/db";
+import Layout from "../../components/Layout";
 
 export default function Ticket({ events }) {
   const [data, setData] = useState({});
@@ -52,8 +53,10 @@ export default function Ticket({ events }) {
         alert("some error occured. contact admin.");
         throw new Error(res.status);
       }
-
-      // window.location.reload(false);
+      if ((res.success = true)) {
+        alert("Ticket Created");
+        window.location.reload(false);
+      }
     } catch (error) {
       // console.log(error);
     }
@@ -183,23 +186,23 @@ export default function Ticket({ events }) {
   };
 
   return (
-    <>
+    <Layout title={"Create Ticket"}>
       {/* MODAL STARTS */}
       {showModal ? (
         <>
-          <div className="justify-center items-center  overflow-x-hidden overflow-y-auto fixed inset-0 z-50">
-            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+          <div className="fixed inset-0 z-50 items-center justify-center overflow-x-hidden overflow-y-auto">
+            <div className="relative w-auto max-w-3xl mx-auto my-6">
               {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+              <div className="relative flex flex-col w-full bg-white border-0 rounded-lg shadow-lg outline-none focus:outline-none">
                 {/*header*/}
-                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                <div className="flex items-start justify-between p-5 border-b border-solid rounded-t border-slate-200">
                   <h3 className="text-3xl font-semibold ">Verify Order</h3>
                   <button
-                    className="p-1 ml-auto bg-transparent border-0 text-red opacity-100 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                    className="float-right p-1 ml-auto text-3xl font-semibold leading-none bg-transparent border-0 outline-none opacity-100 text-red focus:outline-none"
                     onClick={() => setShowModal(false)}
                   >
                     <span
-                      className="bg-transparent text-red h-6 w-6 text-2xl block outline-none focus:outline-none"
+                      className="block w-6 h-6 text-2xl bg-transparent outline-none text-red focus:outline-none"
                       style={{ color: "red" }}
                     >
                       X
@@ -210,29 +213,29 @@ export default function Ticket({ events }) {
                 {/* table started */}
                 <div className="flex flex-col">
                   <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div className="py-4 inline-block min-w-full sm:px-6 lg:px-8">
+                    <div className="inline-block min-w-full py-4 sm:px-6 lg:px-8">
                       <div className="overflow-hidden">
                         <table className="min-w-full text-center">
-                          <tr className="border-b bg-gray-800">
-                            <td className="text-base text-white font-medium px-6 py-4 whitespace-nowrap">
+                          <tr className="bg-gray-800 border-b">
+                            <td className="px-6 py-4 text-base font-medium text-white whitespace-nowrap">
                               Student Name
                             </td>
-                            <td className="text-base text-white font-medium px-6 py-4 whitespace-nowrap">
+                            <td className="px-6 py-4 text-base font-medium text-white whitespace-nowrap">
                               Student Email
                             </td>
-                            <td className="text-base text-white font-medium px-6 py-4 whitespace-nowrap">
+                            <td className="px-6 py-4 text-base font-medium text-white whitespace-nowrap">
                               Student Phone
                             </td>
                           </tr>
 
                           <tr className="bg-white border-b">
-                            <td className="text-base text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
+                            <td className="px-6 py-4 text-base font-medium text-gray-900 whitespace-nowrap">
                               {data.student_name}
                             </td>
-                            <td className="text-base text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
+                            <td className="px-6 py-4 text-base font-medium text-gray-900 whitespace-nowrap">
                               {data.student_email}
                             </td>
-                            <td className="text-base text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
+                            <td className="px-6 py-4 text-base font-medium text-gray-900 whitespace-nowrap">
                               {data.student_phone}
                             </td>
                           </tr>
@@ -243,22 +246,22 @@ export default function Ticket({ events }) {
                 </div>
                 <div className="flex flex-col">
                   <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div className="py-4 inline-block min-w-full sm:px-6 lg:px-8">
+                    <div className="inline-block min-w-full py-4 sm:px-6 lg:px-8">
                       <div className="overflow-hidden">
                         <table className="min-w-full text-center">
-                          <tr className="border-b bg-gray-800">
-                            <td className="text-base text-white font-medium px-6 py-4 whitespace-nowrap">
+                          <tr className="bg-gray-800 border-b">
+                            <td className="px-6 py-4 text-base font-medium text-white whitespace-nowrap">
                               Payment Method
                             </td>
-                            <td className="text-base text-white font-medium px-6 py-4 whitespace-nowrap">
+                            <td className="px-6 py-4 text-base font-medium text-white whitespace-nowrap">
                               {data.payment_mode}
                             </td>
                           </tr>
-                          <tr className="border-b bg-gray-800">
-                            <td className="text-base text-white font-medium px-6 py-4 whitespace-nowrap">
+                          <tr className="bg-gray-800 border-b">
+                            <td className="px-6 py-4 text-base font-medium text-white whitespace-nowrap">
                               Order Total
                             </td>
-                            <td className="text-base text-white font-medium px-6 py-4 whitespace-nowrap">
+                            <td className="px-6 py-4 text-base font-medium text-white whitespace-nowrap">
                               {totalOrder}
                             </td>
                           </tr>
@@ -273,14 +276,14 @@ export default function Ticket({ events }) {
                     <>
                       <div className="flex flex-col">
                         <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                          <div className="py-4 inline-block min-w-full sm:px-6 lg:px-8">
+                          <div className="inline-block min-w-full py-4 sm:px-6 lg:px-8">
                             <div className="overflow-hidden">
                               <table className="min-w-full text-center">
-                                <thead className="border-b bg-gray-800">
+                                <thead className="bg-gray-800 border-b">
                                   <tr>
                                     <td
                                       colSpan="4"
-                                      className="text-lg font-medium text-white px-6 py-4 whitespace-nowrap text-center"
+                                      className="px-6 py-4 text-lg font-medium text-center text-white whitespace-nowrap"
                                     >
                                       {value.event.name} ( price ={" "}
                                       {value.event.price} )
@@ -288,11 +291,11 @@ export default function Ticket({ events }) {
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr className="border-b bg-indigo-100 border-indigo-200">
-                                    <td className="text-base text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
+                                  <tr className="bg-indigo-100 border-b border-indigo-200">
+                                    <td className="px-6 py-4 text-base font-medium text-gray-900 whitespace-nowrap">
                                       ID
                                     </td>
-                                    <td className="text-base text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
+                                    <td className="px-6 py-4 text-base font-medium text-gray-900 whitespace-nowrap">
                                       Email
                                     </td>
                                   </tr>
@@ -303,10 +306,10 @@ export default function Ticket({ events }) {
                                       return (
                                         <>
                                           <tr className="bg-white border-b">
-                                            <td className="text-base text-gray-900 font-lg px-6 py-4 whitespace-nowrap">
+                                            <td className="px-6 py-4 text-base text-gray-900 font-lg whitespace-nowrap">
                                               {val.collegeid}
                                             </td>
-                                            <td className="text-base text-gray-900 font-lg px-6 py-4 whitespace-nowrap">
+                                            <td className="px-6 py-4 text-base text-gray-900 font-lg whitespace-nowrap">
                                               {val.email}
                                             </td>
                                           </tr>
@@ -324,9 +327,9 @@ export default function Ticket({ events }) {
                   );
                 })}
                 {/*footer*/}
-                <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                <div className="flex items-center justify-end p-6 border-t border-solid rounded-b border-slate-200">
                   <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="px-6 py-2 mb-1 mr-1 text-sm font-bold text-red-500 uppercase transition-all duration-150 ease-linear outline-none background-transparent focus:outline-none"
                     type="button"
                     onClick={() => setShowModal(false)}
                   >
@@ -336,7 +339,7 @@ export default function Ticket({ events }) {
               </div>
             </div>
           </div>
-          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+          <div className="fixed inset-0 z-40 bg-black opacity-25"></div>
         </>
       ) : null}
       {/*  ***************** */}
@@ -441,7 +444,7 @@ export default function Ticket({ events }) {
                             id="tarnsection_id"
                             onChange={handleInput}
                             placeholder="Enter the transection id "
-                            className="block w-96 mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            className="block mt-1 border-gray-300 rounded-md shadow-sm w-96 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                             required
                           />
                         </div>
@@ -609,7 +612,7 @@ export default function Ticket({ events }) {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 }
 
