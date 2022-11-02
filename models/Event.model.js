@@ -23,6 +23,10 @@ const EventSchema = new mongoose.Schema({
     type:{
         type: Number,
         required: true
+    },
+    eventCode:{
+        type: String,
+        required: true
     }
 })
 export {EventSchema}
