@@ -1,8 +1,16 @@
 import Head from "next/head";
 import Order from "../../../models/Order.model";
 import dbConnect from "../../../util/db";
+import QRCode from "react-qr-code";
+import { useEffect, useState } from "react";
 
 export default function OrderTickets({ tickets, collegeid }) {
+  const [domain, setDomain] = useState(null);
+
+  useEffect(() => {
+    if (!domain) setDomain(window.location.host);
+  }, []);
+
   return (
     <div className="flex flex-col justify-center items-center min-h-[70vh] w-[100vw]">
       <Head>
@@ -12,6 +20,13 @@ export default function OrderTickets({ tickets, collegeid }) {
       </Head>
       <div className="w-full p-3 mt-0 text-xl font-extrabold text-center text-white bg-indigo-600">
         eticket {collegeid}
+      </div>
+
+      <div className="mt-12">
+        <QRCode
+          value={`https://e-ticket-omega.vercel.app/order/ticket/${collegeid}`}
+        />
+        <div className="mt-3 text-sm text-center text-gray-600">{domain}</div>
       </div>
 
       <div className="sm:mt-0 w-full lg:w-[70%] mx-auto p-10">
