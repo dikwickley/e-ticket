@@ -4,7 +4,7 @@ import dbConnect from "../../../util/db";
 import QRCode from "react-qr-code";
 import { useEffect, useState } from "react";
 
-export default function OrderTickets({ tickets, collegeid }) {
+export default function OrderTickets({ tickets, collegeid, student_info }) {
   const [domain, setDomain] = useState(null);
 
   useEffect(() => {
@@ -20,6 +20,13 @@ export default function OrderTickets({ tickets, collegeid }) {
       </Head>
       <div className="w-full p-3 mt-0 text-xl font-extrabold text-center text-white bg-indigo-600">
         eticket {collegeid}
+      </div>
+
+      <div className="mt-10 text-center">
+        <div className="text-3xl">{student_info.student_name}</div>
+        <p className="mt-1 text-sm text-gray-600">
+          {student_info.student_email} <br /> {student_info.student_phone}
+        </p>
       </div>
 
       <div className="mt-12">
@@ -108,6 +115,9 @@ export async function getServerSideProps(context) {
 
   console.trace({ orders });
 
+  let { student_name, student_email, student_phone } = orders[0];
+  let student_info = { student_name, student_email, student_phone };
+
   let _tickets = [];
   for (var i in orders) {
     for (var j in orders[i]["tickets"]) {
@@ -125,6 +135,6 @@ export async function getServerSideProps(context) {
     };
   } else {
     const tickets = JSON.parse(JSON.stringify(_tickets));
-    return { props: { tickets, collegeid } };
+    return { props: { tickets, collegeid, student_info } };
   }
 }
