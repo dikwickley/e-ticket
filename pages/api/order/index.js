@@ -28,6 +28,7 @@ export default async function handler(req, res) {
         let student_name = req.body.student_name;
         let student_phone = req.body.student_phone;
         let student_email = req.body.student_email;
+        let student_collegeid = req.body.student_collegeid;
         let issue_date = req.body.issue_date;
         let transaction_id = req.body.transaction_id;
         let payment_mode = req.body.payment_mode;
@@ -45,13 +46,15 @@ export default async function handler(req, res) {
             let _p = new Participant();
             _p.collegeid = participants_data[index].collegeid;
             _p.email = participants_data[index].email;
-            console.log({ _p });
             _participants.push(_p);
           }
 
-          _tickets.push(
-            new Ticket({ events: _event, participants: _participants })
-          );
+          let _ticket = await Ticket.create({
+            events: _event,
+            participants: _participants,
+          });
+          console.log({ _ticket });
+          _tickets.push(_ticket);
         }
 
         console.log(_tickets);
@@ -64,6 +67,7 @@ export default async function handler(req, res) {
           student_name,
           student_phone,
           student_email,
+          student_collegeid: student_collegeid.toLowerCase(),
         };
 
         console.log(_order);

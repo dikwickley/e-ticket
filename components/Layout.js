@@ -21,22 +21,6 @@ export default function Layout({
       </Head>
       <div className="px-5 p-3 bg-indigo-500 header  w-[100%] text-white">
         {session ? (
-          // <>
-          // Signed in as {session.user.username} <br />
-          //   {session.user.access == "admin" && (
-          //     <>
-          //       <div className="m-2">
-          //         <Link href="/admin/add-event">Add Event</Link>
-          //       </div>
-          //       <div className="m-2">
-          //         <Link href="/admin/add-user">Add User</Link>
-          //       </div>
-          //     </>
-          //   )}
-          // <div className="m-2">
-          //   <button onClick={() => signOut()}>Sign out</button>
-          // </div>
-          // </>
           <div className="flex flex-row flex-wrap justify-between">
             <div className="flex flex-col items-center lg:flex-row">
               <div>
@@ -100,35 +84,32 @@ export default function Layout({
             </div>
           </div>
         ) : (
-          <>
+          <div className="flex flex-row flex-wrap justify-between">
             <button
-              className="px-3 py-1 font-bold text-black bg-white rounded-full"
+              className="px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer"
               onClick={() => signIn()}
             >
               Sign in
             </button>
-          </>
+            <Link href="/">
+              <div className="px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer">
+                Home
+              </div>
+            </Link>
+          </div>
         )}
       </div>
 
       <div className="main flex flex-row min-h-[75vh] min-w-[100vw] justify-center items-center">
-        {/* {(childern, session, access) => {
-          if (access == null) return childern;
+        {!access && children}
 
-          if (session.user.access == "admin") return childern;
-
-          if (session.user.access == "desk" && access == "desk")
-            return childern;
-
-          return <div>not authorized</div>;
-        }} */}
-        {session && session.user.access == "admin" && children}
-        {session &&
+        {access && session && session.user.access == "admin" && children}
+        {access &&
+          session &&
           access == "desk" &&
           session.user.access == "desk" &&
           children}
       </div>
-      {/* <footer>{"I`m here to stay"}</footer> */}
     </div>
   );
 }

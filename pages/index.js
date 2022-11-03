@@ -5,7 +5,7 @@ import styles from "../styles/Home.module.css";
 
 export default function Home() {
   return (
-    <Layout title={"Home"} access={null}>
+    <Layout title={"Home"}>
       <div className="flex flex-col items-center justify-center font-extrabold">
         <div className="text-8xl lg:text-9xl">eticket</div>
         <div>BVM e-ticket system</div>
