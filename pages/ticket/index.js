@@ -186,7 +186,7 @@ export default function Ticket({ events }) {
   };
 
   return (
-    <Layout title={"Create Ticket"}>
+    <Layout title={"Create Ticket"} access={"desk"}>
       {/* MODAL STARTS */}
       {showModal ? (
         <>

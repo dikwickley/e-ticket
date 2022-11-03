@@ -63,7 +63,7 @@ export default function AddEvent() {
   };
 
   return (
-    <Layout>
+    <Layout title={"ADMIN | Add User"} access={"admin"}>
       <div className="flex justify-center items-center h-[100vh] w-[100vw]">
         <div className="mt-10 sm:mt-0 lg:w-[70%] mx-auto p-10">
           <div className="md:grid md:grid-cols-3 md:gap-6">

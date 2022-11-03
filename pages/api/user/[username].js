@@ -10,16 +10,6 @@ export default async function handler(req, res) {
   } = req;
   const session = await unstable_getServerSession(req, res, authOptions);
 
-  if (!session) {
-    res.status(400).json({ success: false, msg: "not logged in" });
-    return;
-  }
-
-  if (session.user.access != "admin") {
-    res.status(400).json({ success: false, msg: "not admin" });
-    return;
-  }
-
   await dbConnect();
 
   switch (method) {

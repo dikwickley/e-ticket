@@ -13,18 +13,30 @@ export const authOptions = {
         },
         password: { label: "Password", type: "password" },
       },
-      authorize: (credentials) => {
+      authorize: async (credentials) => {
         // database look up
+
+        let res = await fetch(
+          `http://localhost:3000/api/user/${credentials.username}`
+        );
+
+        let data = await res.json();
+
+        console.log(data);
+
+        if (data.success == false) return null;
+
+        if (data.data.length == 0) return null;
+
+        let user = data.data[0];
+
+        console.log({ user });
+
         if (
-          credentials.username === "john" &&
-          credentials.password === "test"
+          credentials.username === user.username &&
+          credentials.password === user.password
         ) {
-          return {
-            id: 2,
-            name: "John",
-            email: "johndoe@test.com",
-            access: "admin",
-          };
+          return user;
         }
 
         // login failed
@@ -39,6 +51,7 @@ export const authOptions = {
         token.id = user.id;
         token.user = user;
         token.user.access = user.access;
+        token.user.username = user.username;
       }
 
       return token;
@@ -47,6 +60,7 @@ export const authOptions = {
       if (token) {
         session.id = token.id;
         session.user.access = token.user.access;
+        session.user.username = token.user.username;
       }
 
       return session;
