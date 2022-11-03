@@ -42,7 +42,7 @@ export default function Layout({
               <div>
                 Signed in as{" "}
                 <label className="font-extrabold">
-                  {session.user.username}
+                  {session.user.username} {`(${session.user.access})`}
                 </label>{" "}
               </div>
               <div className="mx-1">
