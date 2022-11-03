@@ -11,6 +11,7 @@ export default function OrderTickets({ tickets, collegeid, student_info }) {
     if (!domain) setDomain(window.location.host);
   }, []);
 
+  // console.log(tickets);
   return (
     <div className="flex flex-col justify-center items-center min-h-[70vh] w-[100vw]">
       <Head>
@@ -47,10 +48,22 @@ export default function OrderTickets({ tickets, collegeid, student_info }) {
               date={ticket.events.date}
               price={ticket.events.price}
               participants={ticket.participants}
+              order_id={ticket.order_id}
             />
           );
         })}
       </div>
+
+      {/* <div className="self-start m-10">
+        Order IDs:
+        {order_ids?.map((order_id, index) => {
+          return (
+            <p key={index} className="mt-1 text-sm text-gray-600">
+              {order_id}
+            </p>
+          );
+        })}
+      </div> */}
     </div>
   );
 }
@@ -64,7 +77,15 @@ const Participant = ({ email, collegeid }) => {
   );
 };
 
-const Ticket = ({ name, department, eventCode, date, price, participants }) => {
+const Ticket = ({
+  name,
+  department,
+  eventCode,
+  date,
+  price,
+  participants,
+  order_id,
+}) => {
   return (
     <div className="my-2 md:col-span-2 md:mt-0">
       <div className="overflow-hidden shadow sm:rounded-md">
@@ -95,8 +116,9 @@ const Ticket = ({ name, department, eventCode, date, price, participants }) => {
               );
             })}
           </div>
-          <div className="flex justify-end">
+          <div className="flex flex-col items-end justify-end">
             <p className="mt-1 text-sm text-gray-600">Price {price} </p>
+            <p className="mt-1 text-sm text-gray-600">Order ID {order_id} </p>
           </div>
         </div>
       </div>
@@ -109,22 +131,23 @@ export async function getServerSideProps(context) {
 
   const collegeid = context.params.collegeid;
 
-  const orders = await Order.find({
+  let orders = await Order.find({
     student_collegeid: collegeid,
   });
-
-  console.trace({ orders });
 
   let { student_name, student_email, student_phone } = orders[0];
   let student_info = { student_name, student_email, student_phone };
 
   let _tickets = [];
+  let _order_ids = [];
   for (var i in orders) {
     for (var j in orders[i]["tickets"]) {
-      _tickets.push(orders[i]["tickets"][j]);
+      let t = JSON.parse(JSON.stringify(orders[i]["tickets"][j]));
+      t.order_id = orders[i]["_id"];
+
+      _tickets.push(t);
     }
   }
-  console.log(_tickets);
 
   if (!orders) {
     return {
