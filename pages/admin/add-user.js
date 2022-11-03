@@ -9,7 +9,7 @@ export default function AddEvent() {
 
   const postData = async (data) => {
     try {
-      const res = await fetch("/api/event", {
+      const res = await fetch("/api/user", {
         method: "POST",
         headers: {
           Accept: contentType,
@@ -23,6 +23,11 @@ export default function AddEvent() {
       if (!res.ok) {
         console.log(res.error);
         throw new Error(res.status);
+      }
+
+      if (res.ok == true && res.statusText == "Created") {
+        alert("user added");
+        window.location.reload(false);
       }
 
       // router.push('/')
@@ -50,7 +55,7 @@ export default function AddEvent() {
   const handleSubmit = () => {
     console.log(data);
 
-    let fields = ["name", "department", "date", "price", "type"];
+    let fields = ["username", "password", "access"];
 
     for (let x = 0; x < fields.length; x += 1)
       if (!formValidate(fields[x], data)) {
@@ -63,14 +68,14 @@ export default function AddEvent() {
   };
 
   return (
-    <Layout title={"ADMIN | Add Event"} access={"admin"}>
+    <Layout title={"ADMIN | Add User"} access={"admin"}>
       <div className="flex justify-center items-center h-[100vh] w-[100vw]">
         <div className="mt-10 sm:mt-0 lg:w-[70%] mx-auto p-10">
           <div className="md:grid md:grid-cols-3 md:gap-6">
             <div className="md:col-span-1">
               <div className="px-4 sm:px-0">
                 <h3 className="text-lg font-medium leading-6 text-gray-900">
-                  Add Event
+                  Add User
                 </h3>
                 <p className="mt-1 text-sm text-gray-600">
                   Form used to add event
@@ -83,12 +88,12 @@ export default function AddEvent() {
                   <div className="grid grid-cols-6 gap-6">
                     <div className="col-span-6 sm:col-span-3">
                       <label className="block text-sm font-medium text-gray-700">
-                        Event name
+                        Username
                       </label>
                       <input
                         type="text"
-                        name="name"
-                        id="name"
+                        name="username"
+                        id="username"
                         onChange={handleInput}
                         className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
@@ -96,71 +101,31 @@ export default function AddEvent() {
 
                     <div className="col-span-6 sm:col-span-3">
                       <label className="block text-sm font-medium text-gray-700">
-                        Department
+                        Password
+                      </label>
+                      <input
+                        type="text"
+                        name="password"
+                        id="password"
+                        onChange={handleInput}
+                        className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      />
+                    </div>
+
+                    <div className="col-span-6 sm:col-span-3">
+                      <label className="block text-sm font-medium text-gray-700">
+                        Access
                       </label>
                       <select
-                        id="department"
-                        name="department"
+                        id="access"
+                        name="access"
                         onChange={handleInput}
                         className="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                       >
-                        <option>None</option>
-                        <option>IT</option>
-                        <option>ECE</option>
-                        <option>Mech</option>
+                        <option>desk</option>
+                        <option>admin</option>
+                        <option>volunteer</option>
                       </select>
-                    </div>
-
-                    <div className="col-span-6">
-                      <label className="block text-sm font-medium text-gray-700">
-                        Descriptions
-                      </label>
-                      <textarea
-                        type="text"
-                        name="description"
-                        id="description"
-                        onChange={handleInput}
-                        className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                      />
-                    </div>
-
-                    <div className="col-span-6 sm:col-span-3 lg:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700">
-                        Date
-                      </label>
-                      <input
-                        type="date"
-                        name="date"
-                        id="date"
-                        onChange={handleInput}
-                        className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                      />
-                    </div>
-
-                    <div className="col-span-6 sm:col-span-3 lg:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700">
-                        Price
-                      </label>
-                      <input
-                        type="number"
-                        name="price"
-                        id="price"
-                        onChange={handleInput}
-                        className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                      />
-                    </div>
-
-                    <div className="col-span-6 sm:col-span-3 lg:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700">
-                        Number of Participants
-                      </label>
-                      <input
-                        type="number"
-                        name="type"
-                        id="type"
-                        onChange={handleInput}
-                        className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                      />
                     </div>
                   </div>
                 </div>
