@@ -24,6 +24,10 @@ export default function AddEvent() {
         console.log(res.error);
         throw new Error(res.status);
       }
+      if (res.ok) {
+        alert("Event Added");
+        window.location.reload(false);
+      }
 
       // router.push('/')
     } catch (error) {

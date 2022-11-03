@@ -4,10 +4,10 @@ Actionable items:
     3. add view order by college id page (pratham) (done from my side)
     4. send QR code after order creation (smit)
     5. aggregation query 
-    6. delete user (aniket)
-    7. order update
-    8. Which account added order
-    9. View order per account
+    6. delete user (aniket) (later)
+    7. order update (later)
+    8. Which account added order (done)
+    9. View order per account (done)
 
 
 // {

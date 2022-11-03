@@ -60,7 +60,7 @@ export default function Order({ events }) {
       }
       if ((res.success = true)) {
         alert("Ticket Created");
-        // window.location.reload(false);
+        window.location.reload(false);
       }
     } catch (error) {
       // console.log(error);

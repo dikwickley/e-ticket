@@ -40,6 +40,14 @@ export default async function handler(req, res) {
         res.status(400).json({ success: false, error: error });
       }
       break;
+    case "DELETE":
+      try {
+        const users = await User.find({ username: req.body.username }).remove();
+        res.status(200).json({ success: true, data: users });
+      } catch (error) {
+        res.status(400).json({ success: false, error: error });
+      }
+      break;
     default:
       res.status(400).json({ success: false });
       break;
