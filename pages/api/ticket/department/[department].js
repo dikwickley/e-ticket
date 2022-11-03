@@ -1,6 +1,6 @@
 import { resolve } from "styled-jsx/css";
-import Order from "../../../models/Order.model"
-import dbConnect from '../../../util/db'
+import Order from "../../../../models/Order.model"
+import dbConnect from '../../../../util/db'
 // import {Parser,transforms: { unwind }} from 'json2csv'
 const {Parser,transforms:{unwind}} = require('json2csv')
 
@@ -8,7 +8,7 @@ const {Parser,transforms:{unwind}} = require('json2csv')
 
 export default async function handler(req,res){
     const {
-        query: { eventCode },
+        query: { department },
         method,
     } = req
 
@@ -18,8 +18,8 @@ export default async function handler(req,res){
         case 'GET':
             try {
                 // department wise tickets data
-                let orderData = await Order.find({"tickets.events.eventCode":eventCode}, {tickets: {$elemMatch:{'events.eventCode':eventCode}}})
-                if(!orderData || orderData == "") res.status(200).json({success:true,"Message":"No data for given eventCode"});
+                let orderData = await Order.find({"tickets.events.department":department}, {tickets: {$elemMatch:{'events.department':department}}})
+                if(!orderData || orderData == "") res.status(200).json({success:true,"Message":"No data for given department"});
                 else{
                     var temp = JSON.stringify(orderData); // to get correct json structure
                     temp = JSON.parse(temp); // to get correct json structure
