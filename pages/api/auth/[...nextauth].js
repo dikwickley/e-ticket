@@ -1,5 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialProvider from "next-auth/providers/credentials";
+import dbConnect from "../../../util/db";
+import User from "../../../models/User.model";
 
 export const authOptions = {
   providers: [
@@ -16,22 +18,13 @@ export const authOptions = {
       authorize: async (credentials) => {
         // database look up
 
-        let res = await fetch(
-          `${process.env.USER_URL}/api/user/${credentials.username}`
-        );
-
-        let data = await res.json();
-
-        console.log(data);
-
-        if (data.success == false) return null;
-
-        if (data.data.length == 0) return null;
-
-        let user = data.data[0];
+        await dbConnect();
+        let user = await User.find({ username: credentials.username });
 
         console.log({ user });
 
+        if (user.length == 0) return null;
+        user = user[0];
         if (
           credentials.username === user.username &&
           credentials.password === user.password

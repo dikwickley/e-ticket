@@ -38,7 +38,7 @@ export default function Layout({
           // </div>
           // </>
           <div className="flex flex-row flex-wrap justify-between">
-            <div className="flex flex-row items-center">
+            <div className="flex flex-col items-center lg:flex-row">
               <div>
                 Signed in as{" "}
                 <label className="font-extrabold">
@@ -54,27 +54,30 @@ export default function Layout({
                 </button>
               </div>
             </div>
-            <div className="flex flex-row flex-wrap items-center">
-              <div className="px-5 py-1 mx-2 my-1 font-bold text-black bg-white rounded-full cursor-pointer">
+            <div className="flex flex-col flex-wrap lg:items-center lg:flex-row">
+              <div className="px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer">
+                <Link href="/">Home</Link>
+              </div>
+              <div className="px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer">
                 <Link href="/order">Add Order</Link>
               </div>
               {session.user.access == "admin" && (
-                <div className="px-5 py-1 mx-2 my-1 font-bold text-black bg-white rounded-full cursor-pointer">
+                <div className="px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer">
                   <Link href="/admin/add-event">Add Event</Link>
                 </div>
               )}
               {session.user.access == "admin" && (
-                <div className="px-5 py-1 mx-2 my-1 font-bold text-black bg-white rounded-full cursor-pointer">
+                <div className="hidden px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer lg:block">
                   <Link href="/api/event">View Event</Link>
                 </div>
               )}
               {session.user.access == "admin" && (
-                <div className="px-5 py-1 mx-2 my-1 font-bold text-black bg-white rounded-full cursor-pointer">
+                <div className="px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer">
                   <Link href="/admin/add-user">Add User</Link>
                 </div>
               )}
               {session.user.access == "admin" && (
-                <div className="px-5 py-1 mx-2 my-1 font-bold text-black bg-white rounded-full cursor-pointer">
+                <div className="hidden px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer lg:block">
                   <Link href="/api/user">View User</Link>
                 </div>
               )}
@@ -92,7 +95,7 @@ export default function Layout({
         )}
       </div>
 
-      <div className="main flex flex-row min-h-[100vh] min-w-[100vw] justify-center items-center">
+      <div className="main flex flex-row min-h-[75vh] min-w-[100vw] justify-center items-center">
         {/* {(childern, session, access) => {
           if (access == null) return childern;
 
