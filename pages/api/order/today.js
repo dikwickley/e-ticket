@@ -15,11 +15,10 @@ export default async function handler(req,res){
     switch (method) {
         case 'GET':
             try {
-                console.log("here");
+                // console.log("here");
                 // department wise tickets data
                 let yesterdayDate = new Date((new Date().getTime() - (1 * 24 * 60 * 60 * 1000)));
                 let todaysOrders = await Order.find({issue_date:{$gte:yesterdayDate}});
-                console.log(todaysOrders[0].tickets)
                 if(!todaysOrders || todaysOrders == "") res.status(200).json({success:true,"Message":"No tickets created today"});
                 else{
                     var temp = JSON.stringify(todaysOrders); // to get correct json structure
