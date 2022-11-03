@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Layout({
   children,
-  title = "This is the default title",
+  title = "e-ticket",
   access = null,
 }) {
   const { data: session, status } = useSession();
