@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Event from "../../models/Event.model";
-import dbConnect from "./../../util/db";
+import dbConnect from "../../util/db";
 import Layout from "../../components/Layout";
 
-export default function Ticket({ events }) {
+export default function Order({ events }) {
   const [data, setData] = useState({});
   const [participants, setParticipants] = useState({});
   const [order, setOrder] = useState([]);
@@ -350,10 +350,10 @@ export default function Ticket({ events }) {
             <div className="md:col-span-1">
               <div className="px-4 sm:px-0">
                 <h3 className="text-lg font-medium leading-6 text-gray-900">
-                  Create Ticket
+                  Create Order
                 </h3>
                 <p className="mt-1 text-sm text-gray-600">
-                  Create a new ticket using this form
+                  Create a new orders using this form
                 </p>
               </div>
             </div>
@@ -581,12 +581,12 @@ export default function Ticket({ events }) {
             <div className="mt-5 md:col-span-2 md:mt-0">
               <div className="overflow-hidden shadow sm:rounded-md">
                 <div className="px-4 py-5 bg-white sm:p-6">
-                  <div className="px-4 py-3 text-right bg-gray-50 sm:px-6">
+                  <div className="flex flex-row flex-wrap justify-start px-4 py-3 text-right bg-gray-50 sm:px-6">
                     {currentEvent != null && (
                       <button
                         type="submit"
                         onClick={handleAdd}
-                        className="inline-flex justify-center px-4 py-2 mr-4 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        className="inline-flex justify-center px-4 py-2 my-1 mr-4 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                       >
                         Add Event
                       </button>
@@ -594,14 +594,23 @@ export default function Ticket({ events }) {
                     <button
                       type="submit"
                       onClick={() => setShowModal(true)}
-                      className="inline-flex justify-center px-4 py-2 mr-4 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                      className="inline-flex justify-center px-4 py-2 my-1 mr-4 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     >
                       View Order
                     </button>
                     <button
                       type="submit"
+                      onClick={() => {
+                        window.location.reload(false);
+                      }}
+                      className="inline-flex justify-center px-4 py-2 my-1 mr-4 text-sm font-medium text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    >
+                      Reset
+                    </button>
+                    <button
+                      type="submit"
                       onClick={handleSubmit}
-                      className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                      className="inline-flex justify-center px-4 py-2 my-1 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     >
                       Create Ticket
                     </button>

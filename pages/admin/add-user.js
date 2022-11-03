@@ -25,6 +25,11 @@ export default function AddEvent() {
         throw new Error(res.status);
       }
 
+      if (res.ok == true && res.statusText == "Created") {
+        alert("user added");
+        window.location.reload(false);
+      }
+
       // router.push('/')
     } catch (error) {
       console.log(error);
@@ -117,9 +122,8 @@ export default function AddEvent() {
                         onChange={handleInput}
                         className="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                       >
-                        <option>None</option>
-                        <option>admin</option>
                         <option>desk</option>
+                        <option>admin</option>
                         <option>volunteer</option>
                       </select>
                     </div>

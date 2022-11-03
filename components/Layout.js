@@ -19,7 +19,7 @@ export default function Layout({
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <div className="p-3 bg-indigo-500 header absolute w-[100%] text-white">
+      <div className="px-5 p-3 bg-indigo-500 header  w-[100%] text-white">
         {session ? (
           // <>
           // Signed in as {session.user.username} <br />
@@ -37,7 +37,7 @@ export default function Layout({
           //   <button onClick={() => signOut()}>Sign out</button>
           // </div>
           // </>
-          <div className="flex flex-row justify-between">
+          <div className="flex flex-row flex-wrap justify-between">
             <div className="flex flex-row items-center">
               <div>
                 Signed in as{" "}
@@ -54,18 +54,28 @@ export default function Layout({
                 </button>
               </div>
             </div>
-            <div className="flex flex-row items-center">
-              <div className="px-5 py-1 mx-2 font-bold text-black bg-white rounded-full cursor-pointer">
-                <Link href="/ticket">Add Ticket</Link>
+            <div className="flex flex-row flex-wrap items-center">
+              <div className="px-5 py-1 mx-2 my-1 font-bold text-black bg-white rounded-full cursor-pointer">
+                <Link href="/order">Add Order</Link>
               </div>
               {session.user.access == "admin" && (
-                <div className="px-5 py-1 mx-2 font-bold text-black bg-white rounded-full cursor-pointer">
+                <div className="px-5 py-1 mx-2 my-1 font-bold text-black bg-white rounded-full cursor-pointer">
                   <Link href="/admin/add-event">Add Event</Link>
                 </div>
               )}
               {session.user.access == "admin" && (
-                <div className="px-5 py-1 mx-2 font-bold text-black bg-white rounded-full cursor-pointer">
+                <div className="px-5 py-1 mx-2 my-1 font-bold text-black bg-white rounded-full cursor-pointer">
+                  <Link href="/api/event">View Event</Link>
+                </div>
+              )}
+              {session.user.access == "admin" && (
+                <div className="px-5 py-1 mx-2 my-1 font-bold text-black bg-white rounded-full cursor-pointer">
                   <Link href="/admin/add-user">Add User</Link>
+                </div>
+              )}
+              {session.user.access == "admin" && (
+                <div className="px-5 py-1 mx-2 my-1 font-bold text-black bg-white rounded-full cursor-pointer">
+                  <Link href="/api/user">View User</Link>
                 </div>
               )}
             </div>
@@ -82,7 +92,17 @@ export default function Layout({
         )}
       </div>
 
-      <div className="main">
+      <div className="main flex flex-row min-h-[100vh] min-w-[100vw] justify-center items-center">
+        {/* {(childern, session, access) => {
+          if (access == null) return childern;
+
+          if (session.user.access == "admin") return childern;
+
+          if (session.user.access == "desk" && access == "desk")
+            return childern;
+
+          return <div>not authorized</div>;
+        }} */}
         {session && session.user.access == "admin" && children}
         {session &&
           access == "desk" &&
