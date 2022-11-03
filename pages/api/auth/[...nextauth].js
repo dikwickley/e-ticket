@@ -17,7 +17,7 @@ export const authOptions = {
         // database look up
 
         let res = await fetch(
-          `http://localhost:3000/api/user/${credentials.username}`
+          `${process.env.USER_URL}/api/user/${credentials.username}`
         );
 
         let data = await res.json();
