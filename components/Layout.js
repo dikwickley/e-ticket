@@ -55,31 +55,47 @@ export default function Layout({
               </div>
             </div>
             <div className="flex flex-col flex-wrap lg:items-center lg:flex-row">
-              <div className="px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer">
-                <Link href="/">Home</Link>
-              </div>
-              <div className="px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer">
-                <Link href="/order">Add Order</Link>
-              </div>
-              {session.user.access == "admin" && (
+              <Link href="/">
                 <div className="px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer">
-                  <Link href="/admin/add-event">Add Event</Link>
+                  Home
                 </div>
-              )}
-              {session.user.access == "admin" && (
-                <div className="hidden px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer lg:block">
-                  <Link href="/api/event">View Event</Link>
-                </div>
-              )}
-              {session.user.access == "admin" && (
+              </Link>
+
+              <Link href="/order">
                 <div className="px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer">
-                  <Link href="/admin/add-user">Add User</Link>
+                  Add Order
                 </div>
+              </Link>
+
+              {session.user.access == "admin" && (
+                <Link href="/admin/add-event">
+                  <div className="px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer">
+                    Add Event
+                  </div>
+                </Link>
               )}
               {session.user.access == "admin" && (
-                <div className="hidden px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer lg:block">
-                  <Link href="/api/user">View User</Link>
-                </div>
+                <Link href="/api/event">
+                  <div className="px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer">
+                    View Event
+                  </div>
+                </Link>
+              )}
+
+              {session.user.access == "admin" && (
+                <Link href="/admin/add-user">
+                  <div className="px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer">
+                    Add User
+                  </div>
+                </Link>
+              )}
+
+              {session.user.access == "admin" && (
+                <Link href="/api/user">
+                  <div className="px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer">
+                    View User
+                  </div>
+                </Link>
               )}
             </div>
           </div>

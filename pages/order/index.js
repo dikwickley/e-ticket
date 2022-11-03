@@ -11,7 +11,7 @@ export default function Order({ events }) {
   const [currentEvent, setCurrentEvent] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [totalOrder, setTotalOrder] = useState(0);
-  const [transection, setTransection] = useState(false);
+  const [transaction, setTransaction] = useState(false);
 
   const contentType = "application/json";
   const router = useRouter();
@@ -36,6 +36,8 @@ export default function Order({ events }) {
   const re_id = /^[0-9]{2}[a-zA-Z]{2}[0-9]{3}$/;
 
   const postData = async (data) => {
+    console.log("post data", data);
+    data["issue_date"] = new Date();
     try {
       const res = await fetch("/api/order", {
         method: "POST",
@@ -55,7 +57,7 @@ export default function Order({ events }) {
       }
       if ((res.success = true)) {
         alert("Ticket Created");
-        window.location.reload(false);
+        // window.location.reload(false);
       }
     } catch (error) {
       // console.log(error);
@@ -90,13 +92,13 @@ export default function Order({ events }) {
     }
     console.log(data.payment_mode);
     if (data.payment_mode === "Online") {
-      setTransection(true);
+      setTransaction(true);
     } else if (data.payment_mode === "Offline") {
       console.log("before", data.tarnsection_id);
-      setTransection(false);
+      setTransaction(false);
       data.tarnsection_id = "";
     } else if (data.payment_mode === "none") {
-      setTransection(false);
+      setTransaction(false);
       alert("Please Select a Payment method.");
     }
   };
@@ -186,7 +188,7 @@ export default function Order({ events }) {
   };
 
   return (
-    <Layout title={"Create Ticket"} access={"desk"}>
+    <Layout title={"Create Order"} access={"desk"}>
       {/* MODAL STARTS */}
       {showModal ? (
         <>
@@ -431,19 +433,19 @@ export default function Order({ events }) {
                         </select>
                       </div>
                     }
-                    {transection ? (
+                    {transaction ? (
                       <>
                         <div className="col-span-6 sm:col-span-3">
                           <label className="block text-sm font-medium text-gray-700">
-                            Enter Transection Id
+                            Enter transaction Id
                           </label>
                           <input
                             ref={fieldRef}
                             type="text"
-                            name="tarnsection_id"
-                            id="tarnsection_id"
+                            name="transaction_id"
+                            id="transaction_id"
                             onChange={handleInput}
-                            placeholder="Enter the transection id "
+                            placeholder="Enter the transaction id "
                             className="block mt-1 border-gray-300 rounded-md shadow-sm w-96 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                             required
                           />
