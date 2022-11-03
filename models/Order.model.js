@@ -7,6 +7,7 @@ const OrderSchema = new mongoose.Schema({
   student_name: String,
   student_phone: String,
   student_email: String,
+  student_collegeid: String,
   payment_mode: String,
   transaction_id: String,
 });

@@ -39,11 +39,13 @@ export default async function handler(req, res) {
           let participants_data = _order[x].participants;
           let _participants = [];
 
+          console.log({ participants_data });
+
           for (var index in participants_data) {
             let _p = new Participant();
             _p.collegeid = participants_data[index].collegeid;
             _p.email = participants_data[index].email;
-            console.log(_p);
+            console.log({ _p });
             _participants.push(_p);
           }
 
@@ -53,9 +55,6 @@ export default async function handler(req, res) {
         }
 
         console.log(_tickets);
-
-        console.log(issue_date);
-        transaction_id;
 
         _order = {
           tickets: _tickets,

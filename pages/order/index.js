@@ -383,6 +383,23 @@ export default function Order({ events }) {
                     {
                       <div className="col-span-6 sm:col-span-3">
                         <label className="block text-sm font-medium text-gray-700">
+                          Student Collegeid
+                        </label>
+                        <input
+                          ref={fieldRef}
+                          type="text"
+                          name="student_collegeid"
+                          id="student_collegeid"
+                          onChange={handleInput}
+                          placeholder="FirstName LastName"
+                          className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          required
+                        />
+                      </div>
+                    }
+                    {
+                      <div className="col-span-6 sm:col-span-3">
+                        <label className="block text-sm font-medium text-gray-700">
                           Student Email
                         </label>
                         <input
