@@ -96,6 +96,19 @@ export default function AddEvent() {
 
                     <div className="col-span-6 sm:col-span-3">
                       <label className="block text-sm font-medium text-gray-700">
+                        Event Code
+                      </label>
+                      <input
+                        type="text"
+                        name="eventCode"
+                        id="eventCode"
+                        onChange={handleInput}
+                        className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      />
+                    </div>
+
+                    <div className="col-span-6 sm:col-span-3">
+                      <label className="block text-sm font-medium text-gray-700">
                         Department
                       </label>
                       <select
