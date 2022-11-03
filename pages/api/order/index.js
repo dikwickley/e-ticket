@@ -29,6 +29,7 @@ export default async function handler(req, res) {
         let student_phone = req.body.student_phone;
         let student_email = req.body.student_email;
         let student_collegeid = req.body.student_collegeid;
+        student_collegeid = student_collegeid.toLowerCase();
         let issue_date = req.body.issue_date;
         let transaction_id = req.body.transaction_id;
         let payment_mode = req.body.payment_mode;
@@ -41,8 +42,6 @@ export default async function handler(req, res) {
           let participants_data = _order[x].participants;
           let _participants = [];
 
-          console.log({ participants_data });
-
           for (var index in participants_data) {
             let _p = new Participant();
             _p.collegeid = participants_data[index].collegeid;
@@ -54,11 +53,8 @@ export default async function handler(req, res) {
             events: _event,
             participants: _participants,
           });
-          console.log({ _ticket });
           _tickets.push(_ticket);
         }
-
-        console.log(_tickets);
 
         _order = {
           tickets: _tickets,
@@ -68,13 +64,28 @@ export default async function handler(req, res) {
           student_name,
           student_phone,
           student_email,
-          student_collegeid: student_collegeid.toLowerCase(),
+          student_collegeid,
           order_taken_by,
         };
 
-        console.log(_order);
-
         let order = await Order.create(_order);
+        console.log({ order });
+        // send email
+        let encode_string = `https://e-ticket-omega.vercel.app/order/ticket/${student_collegeid}`;
+        console.log({ encode_string });
+        try {
+          let response = await fetch(
+            `https://qrcodegenerateapi.herokuapp.com/QRGenerate/MakeQR/${student_email}/${encode_string}`,
+            {
+              methods: "GET",
+            }
+          );
+          let data = await response.json();
+          console.log({ data });
+        } catch (err) {
+          console.error(err);
+        }
+
         res.status(201).json({ success: true, data: order });
       } catch (error) {
         res.status(400).json({ success: false, error: error });

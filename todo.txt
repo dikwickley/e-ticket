@@ -1,42 +1,10 @@
 Actionable items:
     1. remove email from participant X
     2. integrate download csv (manav)
-    3. add view order by college id page (pratham) (done from my side)
-    4. send QR code after order creation (smit)
+    3. add view order by college id page (pratham) (done)
+    4. send QR code after order creation (smit) (done)
     5. aggregation query 
-    6. delete user (aniket) (later)
+    6. delete user (aniket) (done)
     7. order update (later)
     8. Which account added order (done)
     9. View order per account (done)
-
-
-// {
-// "_id": "63638b1c93bae4afe9899326",
-// "tickets": [
-// {
-// "participants": [
-// {
-// "email": "sprx077@gmail.com",
-// "_id": "63638b1b93bae4afe9899322"
-// }
-// ],
-// "events": {
-// "name": "test event 1",
-// "department": "IT",
-// "date": "2022-09-28T00:00:00.000Z",
-// "price": 100,
-// "type": 1,
-// "_id": "63638b1b93bae4afe9899321",
-// "__v": 0
-// },
-// "_id": "63638b1c93bae4afe9899323"
-// }
-// ],
-// "issue_date": "2022-11-03T09:34:19.716Z",
-// "student_name": "Aniket",
-// "student_phone": "9106400236",
-// "student_email": "sprx077@gmail.com",
-// "payment_mode": "Online",
-// "transaction_id": "123",
-// "__v": 0
-// }
