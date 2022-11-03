@@ -1,7 +1,7 @@
 Actionable items:
     1. remove email from participant X
     2. integrate download csv (manav)
-    3. add view order by college id page (pratham)
+    3. add view order by college id page (pratham) (done from my side)
     4. send QR code after order creation (smit)
     5. aggregation query 
     6. delete user (aniket)

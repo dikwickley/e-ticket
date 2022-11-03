@@ -10,6 +10,7 @@ const OrderSchema = new mongoose.Schema({
   student_collegeid: String,
   payment_mode: String,
   transaction_id: String,
+  order_taken_by: String,
 });
 
 export default mongoose.models.Order || mongoose.model("Order", OrderSchema);

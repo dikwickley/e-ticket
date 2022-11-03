@@ -3,8 +3,10 @@ import { useRouter } from "next/router";
 import Event from "../../models/Event.model";
 import dbConnect from "../../util/db";
 import Layout from "../../components/Layout";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function Order({ events }) {
+  const { data: session, status } = useSession();
   const [data, setData] = useState({});
   const [participants, setParticipants] = useState({});
   const [order, setOrder] = useState([]);
@@ -38,6 +40,7 @@ export default function Order({ events }) {
   const postData = async (data) => {
     console.log("post data", data);
     data["issue_date"] = new Date();
+    data["order_taken_by"] = session.user.username;
     try {
       const res = await fetch("/api/order", {
         method: "POST",

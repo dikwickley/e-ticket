@@ -32,6 +32,7 @@ export default async function handler(req, res) {
         let issue_date = req.body.issue_date;
         let transaction_id = req.body.transaction_id;
         let payment_mode = req.body.payment_mode;
+        let order_taken_by = req.body.order_taken_by;
         for (let x = 0; x < _order.length; x++) {
           let event_data = _order[x].event;
           delete event_data._id;
@@ -68,6 +69,7 @@ export default async function handler(req, res) {
           student_phone,
           student_email,
           student_collegeid: student_collegeid.toLowerCase(),
+          order_taken_by,
         };
 
         console.log(_order);
