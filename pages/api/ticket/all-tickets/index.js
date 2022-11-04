@@ -10,7 +10,6 @@ const {
 
 export default async function handler(req, res) {
   const {
-    query: { code },
     method,
   } = req;
 
@@ -20,7 +19,7 @@ export default async function handler(req, res) {
     case "GET":
       try {
         // department wise tickets data
-        let orderData = await Order.find({ "tickets.events.eventCode": code });
+        let orderData = await Order.find({});
         // let orderData = await Order.find(
         //   { "tickets.events.eventCode": code },
         //   { tickets: { $elemMatch: { "events.eventCode": code } } }
@@ -40,12 +39,13 @@ export default async function handler(req, res) {
             _t[j]["transaction_id"] = orderData[i].transaction_id;
             _t[j] = { ..._t[j], ..._t[j].events };
             delete _t[j].events;
-            if (_t[j].eventCode == code) _tickets.push(_t[j]);
+            // if (_t[j].eventCode == code) 
+            _tickets.push(_t[j]);
           }
         }
 
         // show this all data in CSV
-        // console.trace( _tickets[0]);
+        // console.trace( _tickets);
 
         if (!orderData || orderData == "")
           res

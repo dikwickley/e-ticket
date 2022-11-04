@@ -21,6 +21,7 @@ export default async function handler(req,res){
                 let orderData = await Order.find({"tickets.events.department":department}, {tickets: {$elemMatch:{'events.department':department}}})
                 if(!orderData || orderData == "") res.status(200).json({success:true,"Message":"No data for given department"});
                 else{
+                    console.log(orderData[0])
                     var temp = JSON.stringify(orderData); // to get correct json structure
                     temp = JSON.parse(temp); // to get correct json structure
                     // fields as labels for csv download 
