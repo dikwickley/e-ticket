@@ -3,6 +3,7 @@ import Order from "../../../models/Order.model";
 import dbConnect from "../../../util/db";
 import QRCode from "react-qr-code";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function OrderTickets({ tickets, collegeid, student_info }) {
   const [domain, setDomain] = useState(null);
@@ -19,18 +20,26 @@ export default function OrderTickets({ tickets, collegeid, student_info }) {
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <div className="w-full p-3 mt-0 text-xl font-extrabold text-center text-white bg-indigo-600">
+      <div className="w-full p-3 mt-0 text-xl font-extrabold text-center text-white bg-gradient-to-r from-[#631c24] via-[#da6024] to-[#fbca4a]">
         eticket {collegeid}
       </div>
 
       <div className="mt-10 text-center">
+        <div className="z-0">
+          <Image
+            src={"/small_logo.png"}
+            alt={"logo"}
+            width={200}
+            height={200}
+          />
+        </div>
         <div className="text-3xl">{student_info.student_name}</div>
         <p className="mt-1 text-sm text-gray-600">
           {student_info.student_email} <br /> {student_info.student_phone}
         </p>
       </div>
 
-      <div className="mt-12">
+      <div className="flex flex-col items-center justify-center mt-10">
         <QRCode
           value={`https://e-ticket-omega.vercel.app/order/ticket/${collegeid}`}
         />
@@ -92,13 +101,15 @@ const Ticket = ({
         <div className="px-4 py-5 bg-white sm:p-6">
           <div className="flex flex-row justify-between">
             <h3 className="text-2xl font-medium leading-6 text-indigo-600">
-              <label className="text-lg text-black">
+              <label className="text-lg leading-none text-black">
                 {eventCode || "code"}
               </label>{" "}
-              {name || "Event Name"}
+              <h1 class="font-extrabold text-transparent text-3xl bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 leading-none">
+                {name || "Event Name"}
+              </h1>
             </h3>
           </div>
-          <div className="flex flex-row justify-between">
+          <div className="flex flex-row justify-between mt-3">
             <p className="mt-1 text-sm text-gray-600">{department || "dept"}</p>
             <p className="mt-1 text-sm text-gray-600">
               {date?.split("T")[0] || "date"}
