@@ -8,3 +8,13 @@ Actionable items:
     7. order update (later)
     8. Which account added order (done)
     9. View order per account (done)
+    10. Loading option
+    
+
+
+search by per day:(tickets)
+    all ticket details
+    desk username
+    pay type
+    transcation id
+

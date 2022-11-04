@@ -1,26 +1,21 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Layout from "../components/Layout";
+import Link from "next/link";
 
 export default function Download() {
   const [data, setData] = useState({});
-  const [users, setUsers] = useState(null);
   const contentType = "application/json";
   const router = useRouter();
 
-  const fetchUsers = async () => {
-    let res = await fetch("/api/user");
-    let data = await res.json();
-    setUsers(data.data);
+  const fetchByCode = async (code) => {
+    const res = await fetch(`/api/order/ticket/${code}`);
   };
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
-
-  useEffect(() => {
-    console.log({ users });
-  }, [users]);
+  const handleFetchByCode = () => {
+    let eventCode = data["event_code"];
+    fetchByCode(eventCode);
+  };
 
   const handleInput = (event) => {
     let inputname = event.target.name;
@@ -65,12 +60,17 @@ export default function Download() {
                   </div>
                 </div>
                 <div className="px-4 py-3 text-right bg-gray-50 sm:px-6">
-                  <button
-                    type="submit"
-                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                  >
-                    Download
-                  </button>
+                  <Link href={`/api/ticket/event-code/${data["event_code"]}`}>
+                    <a target="_blank">
+                      <button
+                        type="submit"
+                        // onClick={handleFetchByCode}
+                        className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                      >
+                        Download
+                      </button>
+                    </a>
+                  </Link>
                 </div>
               </div>
             </div>

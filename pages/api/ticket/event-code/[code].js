@@ -1,54 +1,94 @@
 import { resolve } from "styled-jsx/css";
-import Order from "../../../../models/Order.model"
-import dbConnect from '../../../../util/db'
+import Order from "../../../../models/Order.model";
+import dbConnect from "../../../../util/db";
 // import {Parser,transforms: { unwind }} from 'json2csv'
-const {Parser,transforms:{unwind}} = require('json2csv')
+const {
+  Parser,
+  transforms: { unwind },
+} = require("json2csv");
 
+export default async function handler(req, res) {
+  const {
+    query: { code },
+    method,
+  } = req;
 
+  await dbConnect();
 
-export default async function handler(req,res){
-    const {
-        query: { code },
-        method,
-    } = req
+  switch (method) {
+    case "GET":
+      try {
+        // department wise tickets data
+        let orderData = await Order.find({ "tickets.events.eventCode": code });
+        // let orderData = await Order.find(
+        //   { "tickets.events.eventCode": code },
+        //   { tickets: { $elemMatch: { "events.eventCode": code } } }
+        // );
+        orderData = JSON.parse(JSON.stringify(orderData));
+        let _tickets = [];
 
-    await dbConnect()
+        for (var i in orderData) {
+          let order = orderData[i];
+          let _t = orderData[i].tickets;
+          for (var j in _t) {
+            _t[j]["payment_mode"] = orderData[i].payment_mode;
+            _t[j]["student_name"] = orderData[i].student_name;
+            _t[j]["student_phone"] = orderData[i].student_phone;
+            _t[j]["payment_mode"] = orderData[i].payment_mode;
+            _t[j]["order_taken_by"] = orderData[i].order_taken_by;
+            _t[j]["transaction_id"] = orderData[i].transaction_id;
+            _t[j] = { ..._t[j], ..._t[j].events };
+            delete _t[j].events;
+            if (_t[j].eventCode == code) _tickets.push(_t[j]);
+          }
+        }
 
-    switch (method) {
-        case 'GET':
-            try {
-                // department wise tickets data
-                let orderData = await Order.find({"tickets.events.eventCode":code}, {tickets: {$elemMatch:{'events.eventCode':code}}})
-                if(!orderData || orderData == "") res.status(200).json({success:true,"Message":"No data for given eventCode"});
-                else{
-                    var temp = JSON.stringify(orderData); // to get correct json structure
-                    temp = JSON.parse(temp); // to get correct json structure
-                    // fields as labels for csv download 
-                    const fields = [ 
-                        {lael:"ticket:id",value:"tickets._id"},
-                        {label:"events:name",value:"tickets.events.name"},
-                        {label:"events:department",value:"tickets.events.department"},
-                        {label:"events:price",value:"tickets.events.price"},
-                        {label:"events:date",value:"tickets.events.date"},
-                        {label:"events:type",value:"tickets.events.type"},
-                        {label:"events:eventCode",value:"tickets.events.eventCode"},
-                        {label:"participants:email",value:"tickets.participants.email"},
-                        {label:"participants:collegeid",value:"tickets.participants.collegeid"}
-                      ];
+        // show this all data in CSV
+        console.trace({ _tickets });
 
-                    // json to csv conversion
-                    const transforms = [unwind({ paths: ["tickets", "tickets.tickets","tickets.participants","tickets.tickets.participants.participants"] })];
-                    const json2csv = new Parser({ fields,transforms });
-                    const csv = json2csv.parse(temp);
-                    res.setHeader('Content-Type', 'text/csv');
-                    res.status(200).send(csv);
-                }
-            } catch (error) {
-                res.status(400).json({success:false,"error":error.message})
-            }
+        if (!orderData || orderData == "")
+          res
+            .status(200)
+            .json({ success: true, Message: "No data for given eventCode" });
+        else {
+          const fields = [
+            { lael: "ticket_id", value: "tickets._id" },
+            { label: "Event name", value: "tickets.name" },
+            { label: "Leader Name", value: "tickets.student_name" },
+            { label: "Leader Phone", value: "tickets.student_phone" },
+            { label: "Event Date", value: "tickets.date" },
+            { label: "Event Price", value: "tickets.price" },
+            { label: "Participants", value: "tickets.type" },
+            { label: "Order Taken By", value: "tickets.order_taken_by" },
+            { label: "Event Code", value: "tickets.eventCode" },
+            { label: "Payment Mode", value: "tickets.payment_mode" },
+            { label: "Payment ID", value: "tickets.transaction_id" },
+            {
+              label: "Participant Email",
+              value: "tickets.participants.email",
+            },
+            {
+              label: "Participant Collegeid",
+              value: "tickets.participants.collegeid",
+            },
+          ];
 
-            break;
-    }
+          // json to csv conversion
+          const transforms = [
+            unwind({
+              paths: ["tickets", "tickets.tickets", "tickets.participants"],
+            }),
+          ];
+          const json2csv = new Parser({ fields, transforms });
+          const csv = json2csv.parse(_tickets);
 
+          res.setHeader("Content-Type", "text/csv");
+          res.status(200).send(csv);
+        }
+      } catch (error) {
+        res.status(400).json({ success: false, error: error.message });
+      }
 
+      break;
+  }
 }
