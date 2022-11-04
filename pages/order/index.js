@@ -190,6 +190,12 @@ export default function Order({ events }) {
     }
   };
 
+  const redirect = () =>{
+   
+    router.push('/viewOrder');
+ 
+}
+
   return (
     <Layout title={"Create Order"} access={"desk"}>
       {/* MODAL STARTS */}
@@ -629,6 +635,15 @@ export default function Order({ events }) {
                     >
                       Reset
                     </button>
+                    
+                    <button
+                      type="submit"
+                      onClick={redirect}
+                      className="inline-flex justify-center px-4 py-2 my-1 mr-4 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    >
+                      Total Order
+                    </button>
+
                     <button
                       type="submit"
                       onClick={handleSubmit}
@@ -636,6 +651,7 @@ export default function Order({ events }) {
                     >
                       Create Ticket
                     </button>
+                   
                   </div>
                 </div>
               </div>
