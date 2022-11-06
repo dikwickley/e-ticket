@@ -1,7 +1,6 @@
 import Event from "../../../models/Event.model";
 import Ticket from "../../../models/Ticket.model";
 import Order from "../../../models/Order.model";
-
 import Participant from "../../../models/Participant.model";
 import dbConnect from "../../../util/db";
 
