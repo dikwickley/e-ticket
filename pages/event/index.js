@@ -24,7 +24,9 @@ export default function Event() {
     <Layout title={"All Events"}>
       <div className="flex flex-col items-center justify-center font-extrabold">
         <div className="py-10 text-6xl">Events</div>
+
         <div className="flex flex-col flex-wrap justify-center mb-20 md:flex-row">
+          {!events && <div>Loading...</div>}
           {events &&
             events.map((event, index) => {
               return (
