@@ -45,11 +45,13 @@ export default function Layout({
                 </div>
               </Link>
 
-              <Link href="/order">
-                <div className="px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer">
-                  Add Order
-                </div>
-              </Link>
+              {session.user.access == "desk" && (
+                <Link href="/order">
+                  <div className="px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer">
+                    Add Order
+                  </div>
+                </Link>
+              )}
 
               {session.user.access == "admin" && (
                 <Link href="/admin/add-event">
@@ -58,13 +60,12 @@ export default function Layout({
                   </div>
                 </Link>
               )}
-              {session.user.access == "admin" && (
-                <Link href="/api/event">
-                  <div className="px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer">
-                    View Event
-                  </div>
-                </Link>
-              )}
+
+              <Link href="/event">
+                <div className="px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer">
+                  View Event
+                </div>
+              </Link>
 
               {session.user.access == "admin" && (
                 <Link href="/admin/manage-user">
@@ -91,11 +92,18 @@ export default function Layout({
             >
               Sign in
             </button>
-            <Link href="/">
-              <div className="px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer">
-                Home
-              </div>
-            </Link>
+            <div className="flex">
+              <Link href="/">
+                <div className="px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer">
+                  Home
+                </div>
+              </Link>
+              <Link href="/event">
+                <div className="px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer">
+                  View Events
+                </div>
+              </Link>
+            </div>
           </div>
         )}
       </div>
