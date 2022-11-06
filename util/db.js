@@ -1,11 +1,12 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
-const MONGODB_URI = "mongodb://aniket:Aniketsprx077@cluster0-shard-00-00-uugt8.mongodb.net:27017,cluster0-shard-00-01-uugt8.mongodb.net:27017,cluster0-shard-00-02-uugt8.mongodb.net:27017/main?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority"
+const MONGODB_URI =
+  "mongodb+srv://dikwickley:dikwickley077@cluster0.lnifa3d.mongodb.net/?retryWrites=true&w=majority";
 
 if (!MONGODB_URI) {
   throw new Error(
-    'Please define the MONGODB_URI environment variable inside .env.local'
-  )
+    "Please define the MONGODB_URI environment variable inside .env.local"
+  );
 }
 
 /**
@@ -13,35 +14,35 @@ if (!MONGODB_URI) {
  * in development. This prevents connections growing exponentially
  * during API Route usage.
  */
-let cached = global.mongoose
+let cached = global.mongoose;
 
 if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null }
+  cached = global.mongoose = { conn: null, promise: null };
 }
 
 async function dbConnect() {
   if (cached.conn) {
-    return cached.conn
+    return cached.conn;
   }
 
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
-    }
+    };
 
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
-      return mongoose
-    })
+      return mongoose;
+    });
   }
 
   try {
-    cached.conn = await cached.promise
+    cached.conn = await cached.promise;
   } catch (e) {
-    cached.promise = null
-    throw e
+    cached.promise = null;
+    throw e;
   }
 
-  return cached.conn
+  return cached.conn;
 }
 
-export default dbConnect
+export default dbConnect;

@@ -126,9 +126,9 @@ export default function AddEvent() {
                         className="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                       >
                         <option>None</option>
-                        <option>IT</option>
-                        <option>ECE</option>
-                        <option>Mech</option>
+                        <option>Tech</option>
+                        <option>Non-Tech</option>
+                        <option>Special</option>
                       </select>
                     </div>
 
