@@ -32,6 +32,7 @@ export default async function handler(req, res) {
             _t[j]["payment_mode"] = orderData[i].payment_mode;
             _t[j]["student_name"] = orderData[i].student_name;
             _t[j]["student_phone"] = orderData[i].student_phone;
+            _t[j]["student_collegeid"] = orderData[i].student_collegeid;
             _t[j]["payment_mode"] = orderData[i].payment_mode;
             _t[j]["order_taken_by"] = orderData[i].order_taken_by;
             _t[j]["transaction_id"] = orderData[i].transaction_id;
@@ -56,6 +57,7 @@ export default async function handler(req, res) {
             { lael: "ticket_id", value: "_id" },
             { label: "Event name", value: "name" },
             { label: "Leader Name", value: "student_name" },
+            { label: "Leader CollegeId", value: "student_collegeid" },
             { label: "Leader Phone", value: "student_phone" },
             { label: "Event Date", value: "date" },
             { label: "Event Price", value: "price" },
