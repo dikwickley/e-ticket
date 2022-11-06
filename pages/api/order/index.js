@@ -75,7 +75,7 @@ export default async function handler(req, res) {
         console.log({ encode_string });
         try {
           let response = await fetch(
-            `https://qrcodegenerateapi.herokuapp.com/QRGenerate/MakeQR/${student_email}/${encode_string}`,
+            `https://genesis-qrcode-api.herokuapp.com/QRGenerate/MakeQR/${student_email}/${encode_string}`,
             {
               methods: "GET",
             }

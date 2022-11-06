@@ -638,7 +638,9 @@ export default function Order({ events }) {
                       type="submit"
                       onClick={handleSubmit}
                       disabled={loading ? true : false}
-                      className="inline-flex justify-center px-4 py-2 my-1 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                      className={`inline-flex justify-center px-4 py-2 my-1 text-sm font-medium text-white ${
+                        loading ? "bg-gray-500" : "bg-green-600"
+                      } border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
                     >
                       Create Ticket
                     </button>
