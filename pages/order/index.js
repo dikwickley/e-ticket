@@ -400,7 +400,7 @@ export default function Order({ events }) {
                           name="student_collegeid"
                           id="student_collegeid"
                           onChange={handleInput}
-                          placeholder="FirstName LastName"
+                          placeholder="example 20it433"
                           className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                           required
                         />
