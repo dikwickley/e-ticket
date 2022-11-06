@@ -45,13 +45,14 @@ export default function Layout({
                 </div>
               </Link>
 
-              {session.user.access == "desk" && (
-                <Link href="/order">
-                  <div className="px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer">
-                    Add Order
-                  </div>
-                </Link>
-              )}
+              {session.user.access == "desk" ||
+                (session.user.access == "admin" && (
+                  <Link href="/order">
+                    <div className="px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer">
+                      Add Order
+                    </div>
+                  </Link>
+                ))}
 
               {session.user.access == "admin" && (
                 <Link href="/admin/add-event">

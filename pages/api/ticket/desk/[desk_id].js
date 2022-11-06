@@ -36,9 +36,12 @@ export default async function handler(req, res) {
             _t[j]["student_name"] = orderData[i].student_name;
             _t[j]["student_phone"] = orderData[i].student_phone;
             _t[j]["payment_mode"] = orderData[i].payment_mode;
+
             _t[j]["order_taken_by"] = orderData[i].order_taken_by;
+            _t[j]["issue_date"] = orderData[i].issue_date;
             _t[j]["transaction_id"] = orderData[i].transaction_id;
             _t[j] = { ..._t[j], ..._t[j].events };
+            _t[j].date = _t[j].date.split("T")[0];
             delete _t[j].events;
             _tickets.push(_t[j]);
           }
@@ -60,6 +63,7 @@ export default async function handler(req, res) {
             { label: "Event Date", value: "date" },
             { label: "Event Price", value: "price" },
             { label: "Participants", value: "type" },
+            { label: "Issue Date", value: "issue_date" },
             { label: "Order Taken By", value: "order_taken_by" },
             { label: "Event Code", value: "eventCode" },
             { label: "Payment Mode", value: "payment_mode" },
