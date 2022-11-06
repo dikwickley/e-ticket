@@ -19,15 +19,15 @@ export default function ViewOrder() {
 
   return (
     <>
-      <h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-3xl text-center">
-        <span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
+      <h1 className="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-3xl text-center">
+        <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
           Total Order Data
         </span>
       </h1>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
         {Object.keys(da.data).map((keyName, i) => (
           <>
-            <h4 class="text-2xl font-bold dark:text-white text-center">
+            <h4 className="text-2xl font-bold dark:text-white text-center">
               {i + 1} ORDER
             </h4>
             <table className="w-full mx-5 my-5 text-sm text-left text-gray-500 border border-separate dark:text-gray-400 border-slate-400">
@@ -86,10 +86,10 @@ export default function ViewOrder() {
 
               {Object.keys(da.data[i].tickets).map((k, index) => (
                 <>
-                  <h4 class="text-2xl font-bold text-blue-600/100 text-right">
+                  <h4 className="text-2xl font-bold text-blue-600/100 text-right">
                     {index + 1} Ticket Data &nbsp;
                   </h4>
-                  <h4 class="text-2xl font-bold dark:text-white">
+                  <h4 className="text-2xl font-bold dark:text-white">
                     &nbsp;{index + 1} Tickets Participants Data :{" "}
                   </h4>
                   {Object.keys(da.data[i].tickets[0].participants).map(
@@ -123,7 +123,7 @@ export default function ViewOrder() {
                       </>
                     )
                   )}
-                  <h4 class="text-2xl font-bold dark:text-white">
+                  <h4 className="text-2xl font-bold dark:text-white">
                     &nbsp; {index + 1} Tickets Event Detail :{" "}
                   </h4>
                   <tr>
