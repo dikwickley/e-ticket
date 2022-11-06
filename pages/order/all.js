@@ -22,11 +22,11 @@ export default function AllOrder() {
     <Layout access={"admin"} title={"All Orders"}>
       <div className="w-[70%] py-5">
         <h1 className="mb-4 text-3xl font-extrabold text-center text-gray-900 dark:text-white md:text-5xl lg:text-3xl">
-          <span className="text-4xl text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
+          <span className="text-6xl text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
             Total Order Data
           </span>
         </h1>
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
+        <div className="relative mt-10 overflow-x-auto shadow-md sm:rounded-lg">
           {Object.keys(da.data).map((keyName, i) => (
             <>
               <h4 className="text-2xl font-bold text-center dark:text-white">

@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function Layout({
   children,
@@ -9,6 +10,7 @@ export default function Layout({
   access = null,
 }) {
   const { data: session, status } = useSession();
+  const router = useRouter();
   useEffect(() => {
     console.log(session);
   }, [session]);
@@ -31,7 +33,10 @@ export default function Layout({
               <div className="mx-1">
                 <button
                   className="px-3 py-1 mx-2 font-bold text-black bg-white rounded-full"
-                  onClick={() => signOut()}
+                  onClick={() => {
+                    signOut();
+                    router.push("/");
+                  }}
                 >
                   Sign out
                 </button>
@@ -53,6 +58,14 @@ export default function Layout({
                     </div>
                   </Link>
                 ))}
+
+              {session.user.access == "admin" && (
+                <Link href="/order/all">
+                  <div className="px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer">
+                    All Order
+                  </div>
+                </Link>
+              )}
 
               {session.user.access == "admin" && (
                 <Link href="/admin/add-event">
