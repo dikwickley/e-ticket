@@ -49,6 +49,7 @@ export default async function handler(req, res) {
         let transaction_id = req.body.transaction_id;
         let payment_mode = req.body.payment_mode;
         let order_taken_by = req.body.order_taken_by;
+        let _participant_emails = [];
         for (let x = 0; x < _order.length; x++) {
           let event_data = _order[x].event;
           delete event_data._id;
@@ -61,6 +62,7 @@ export default async function handler(req, res) {
             let _p = new Participant();
             _p.collegeid = participants_data[index].collegeid;
             _p.email = participants_data[index].email;
+            _participant_emails.push(_p);
             _participants.push(_p);
           }
 
@@ -86,19 +88,21 @@ export default async function handler(req, res) {
         let order = await Order.create(_order);
         console.log({ order });
         // send email
-        let encode_string = `https://e-ticket-omega.vercel.app/order/ticket/${student_collegeid}`;
-        console.log({ encode_string });
-        try {
-          let response = await fetch(
-            `https://genesis-qrcode-api.herokuapp.com/QRGenerate/MakeQR/${student_email}/${encode_string}`,
-            {
-              methods: "GET",
-            }
-          );
-          let data = await response.json();
-          console.log({ data });
-        } catch (err) {
-          console.error(err);
+        for (let x in _participant_emails) {
+          let encode_string = `https://e-ticket-omega.vercel.app/order/ticket/${_participant_emails[x].collegeid}`;
+          console.log({ encode_string });
+          try {
+            let response = await fetch(
+              `https://genesis-qrcode-api.herokuapp.com/QRGenerate/MakeQR/${_participant_emails[x].email}/${encode_string}`,
+              {
+                methods: "GET",
+              }
+            );
+            let data = await response.json();
+            console.log({ data });
+          } catch (err) {
+            console.error(err);
+          }
         }
 
         res.status(201).json({ success: true, data: order });
