@@ -1,6 +1,8 @@
+import { unstable_getServerSession } from "next-auth";
 import { resolve } from "styled-jsx/css";
 import Order from "../../../../models/Order.model";
 import dbConnect from "../../../../util/db";
+import { authOptions } from "../../auth/[...nextauth]";
 // import {Parser,transforms: { unwind }} from 'json2csv'
 
 const {
@@ -13,6 +15,20 @@ export default async function handler(req, res) {
     query: { code },
     method,
   } = req;
+
+  const session = await unstable_getServerSession(req, res, authOptions);
+
+  console.log({ session });
+
+  if (!session) {
+    res.status(400).json({ success: false, msg: "not logged in" });
+    return;
+  }
+
+  if (session.user.access != "admin") {
+    res.status(400).json({ success: false, msg: "not admin" });
+    return;
+  }
 
   await dbConnect();
 
