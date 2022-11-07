@@ -101,20 +101,20 @@ export default function Analytics({
   return (
     <Layout access={"admin"} title={"Analytics"}>
       <div className="flex flex-col justify-center items-center min-h-[70vh] w-[100vw]">
-        <div className="mt-10 sm:mt-0 lg:w-[70%] mx-auto p-10">
-          <div className="self-center mb-10 text-5xl text-center">
+        <div className="mt-10 sm:mt-0 w-full lg:w-[70%] mx-auto p-10">
+          <div className="self-center mb-10 text-3xl text-center md:text-5xl">
             Analytics
           </div>
           <div className="md:grid md:grid-cols-1 md:gap-6">
             <div className="overflow-hidden shadow sm:rounded-md">
-              <div className="px-4 py-3 text-right bg-gray-50 sm:px-6">
+              <div className="px-1 py-3 text-right bg-gray-50 sm:px-6">
                 <div className="flex flex-col items-center">
                   <div className="flex flex-col text-center md:flex-row ">
                     <div className="m-3">
                       <div className="text-2xl font-extrabold">
                         Total Tickets
                       </div>
-                      <div className="font-extrabold leading-none text-transparent text-8xl bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
+                      <div className="text-6xl font-extrabold leading-none text-transparent md:text-8xl bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
                         {tickets.length || "#"}
                       </div>
                     </div>
@@ -122,7 +122,7 @@ export default function Analytics({
                       <div className="text-2xl font-extrabold">
                         Total Participants
                       </div>
-                      <div className="font-extrabold leading-none text-transparent text-8xl bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
+                      <div className="text-6xl font-extrabold leading-none text-transparent md:text-8xl bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
                         {total_ticket_data.total_ticket_participants || "#"}
                       </div>
                     </div>
@@ -130,7 +130,7 @@ export default function Analytics({
                       <div className="text-2xl font-extrabold">
                         Total Amount
                       </div>
-                      <div className="font-extrabold leading-none text-transparent text-8xl bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
+                      <div className="text-6xl font-extrabold leading-none text-transparent md:text-8xl bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
                         ₹{total_ticket_data.total_ticket_price || "#"}
                       </div>
                     </div>
