@@ -11,6 +11,7 @@ export default function ViewOrder() {
       .then((da) => {
         setData(da);
         setLoading(false);
+        console.log(da);
       });
   }, []);
 
@@ -19,7 +20,7 @@ export default function ViewOrder() {
 
   return (
     <>
-      <h1 className="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-3xl text-center">
+      <h1 className="mb-4 text-3xl font-extrabold text-center text-gray-900 dark:text-white md:text-5xl lg:text-3xl">
         <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
           Total Order Data
         </span>
@@ -27,7 +28,7 @@ export default function ViewOrder() {
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
         {Object.keys(da.data).map((keyName, i) => (
           <>
-            <h4 className="text-2xl font-bold dark:text-white text-center">
+            <h4 className="text-2xl font-bold text-center dark:text-white">
               {i + 1} ORDER
             </h4>
             <table className="w-full mx-5 my-5 text-sm text-left text-gray-500 border border-separate dark:text-gray-400 border-slate-400">
@@ -86,13 +87,13 @@ export default function ViewOrder() {
 
               {Object.keys(da.data[i].tickets).map((k, index) => (
                 <>
-                  <h4 className="text-2xl font-bold text-blue-600/100 text-right">
+                  <h4 className="text-2xl font-bold text-right text-blue-600/100">
                     {index + 1} Ticket Data &nbsp;
                   </h4>
                   <h4 className="text-2xl font-bold dark:text-white">
                     &nbsp;{index + 1} Tickets Participants Data :{" "}
                   </h4>
-                  {Object.keys(da.data[i].tickets[0].participants).map(
+                  {Object.keys(da.data[i].tickets[k].participants).map(
                     (key, ind) => (
                       <>
                         <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -103,7 +104,7 @@ export default function ViewOrder() {
                             Participant {ind + 1}s Email
                           </th>
                           <th className="px-6 py-3">
-                            {da.data[i].tickets[index].participants[ind].email}
+                            {da.data[i].tickets[index].participants[ind]?.email}
                           </th>
                         </tr>
                         <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -116,7 +117,7 @@ export default function ViewOrder() {
                           <th className="px-6 py-3">
                             {
                               da.data[i].tickets[index].participants[ind]
-                                .collegeid
+                                ?.collegeid
                             }
                           </th>
                         </tr>
