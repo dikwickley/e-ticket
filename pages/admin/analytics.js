@@ -179,10 +179,10 @@ export default function Analytics({
             <div className="mt-5 md:col-span-2 md:mt-0">
               <div className="overflow-hidden shadow sm:rounded-md">
                 <div className="px-4 py-3 text-right bg-gray-50 sm:px-6">
-                  <div className="flex flex-col items-center">
-                    <div className="self-center mb-10 text-2xl text-center">
-                      Participants per Event
-                    </div>
+                  <div className="self-center mb-10 text-2xl text-center">
+                    Participants per Event
+                  </div>
+                  <div className="flex flex-col items-center md:flex-row md:flex-wrap">
                     {/* <Bar
                       options={event_revenue_options}
                       data={event_revenue_data}

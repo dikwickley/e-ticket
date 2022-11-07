@@ -90,6 +90,14 @@ export default function Layout({
               )}
 
               {session.user.access == "admin" && (
+                <Link href="/admin/analytics">
+                  <div className="px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer">
+                    Analytics
+                  </div>
+                </Link>
+              )}
+
+              {session.user.access == "admin" && (
                 <Link href="/download">
                   <div className="px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer">
                     Download
