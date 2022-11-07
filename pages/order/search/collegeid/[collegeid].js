@@ -20,7 +20,7 @@ export default function CollegeIdOrders({ collegeid }) {
   if (!da) return <p>No data</p>;
 
   return (
-    <Layout>
+    <Layout access={"admin"} title={"Search "}>
       <div className=" w-full md:w-[50vw] overflow-hidden">
         <h1 className="mb-4 text-3xl font-extrabold text-center text-gray-900 dark:text-white md:text-5xl lg:text-3xl">
           <div className="text-5xl text-transparent py-9 bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">

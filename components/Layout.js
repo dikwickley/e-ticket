@@ -104,6 +104,14 @@ export default function Layout({
                   </div>
                 </Link>
               )}
+
+              {session.user.access == "admin" && (
+                <Link href="/admin/delete-order">
+                  <div className="px-5 py-1 mx-2 my-1 font-bold text-center text-white bg-red-600 rounded-full cursor-pointer">
+                    Delete Order
+                  </div>
+                </Link>
+              )}
             </div>
           </div>
         ) : (
