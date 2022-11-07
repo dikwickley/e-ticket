@@ -4,22 +4,68 @@ import {
   CategoryScale,
   LinearScale,
   BarElement,
+  LineElement,
   Title,
   Tooltip,
   Legend,
+  PointElement,
 } from "chart.js";
-Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+Chart.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend
+);
 import Layout from "../../components/Layout";
 import dbConnect from "../../util/db";
 import Ticket from "./../../models/Ticket.model";
-import { Bar } from "react-chartjs-2";
+import Order from "./../../models/Order.model";
+import { Bar, Line } from "react-chartjs-2";
 
 export default function Analytics({
   tickets,
   total_ticket_data,
   total_event_data,
+  revenue_date_data,
 }) {
-  console.log(total_event_data);
+  const revenue_per_day_options = {
+    responsive: true,
+    scales: {
+      x: {
+        ticks: {
+          autoSkip: false,
+          maxRotation: 90,
+          minRotation: 90,
+        },
+      },
+    },
+    plugins: {
+      tooltips: { enabled: true },
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: false,
+        text: "Chart.js Bar Chart",
+      },
+    },
+  };
+
+  const revenue_per_day_data = {
+    labels: Object.keys(revenue_date_data),
+    datasets: [
+      {
+        label: "Day Revenue",
+        data: Object.values(revenue_date_data),
+        backgroundColor: "rgb(75, 192, 192)",
+      },
+    ],
+  };
+
   const event_participant_options = {
     responsive: true,
     scales: {
@@ -139,6 +185,25 @@ export default function Analytics({
               </div>
             </div>
           </div>
+
+          <div className="my-10 md:grid md:grid-cols-1 md:gap-6">
+            <div className="mt-5 md:col-span-2 md:mt-0">
+              <div className="overflow-hidden shadow sm:rounded-md">
+                <div className="px-4 py-3 text-right bg-gray-50 sm:px-6">
+                  <div className="flex flex-col items-center">
+                    <div className="self-center mb-10 text-2xl text-center">
+                      Revenue per day
+                    </div>
+                    <Line
+                      options={revenue_per_day_options}
+                      data={revenue_per_day_data}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="my-10 md:grid md:grid-cols-1 md:gap-6">
             <div className="mt-5 md:col-span-2 md:mt-0">
               <div className="overflow-hidden shadow sm:rounded-md">
@@ -258,7 +323,26 @@ export async function getServerSideProps(context) {
 
   let tickets = await Ticket.find({});
   tickets = JSON.parse(JSON.stringify(tickets));
-  console.log(tickets);
+
+  let orders = await Order.find({});
+  orders = JSON.parse(JSON.stringify(orders));
+
+  let revenue_date_data = {};
+
+  for (let x in orders) {
+    let date = orders[x].issue_date.split("T")[0];
+    if (!revenue_date_data.hasOwnProperty(date)) {
+      revenue_date_data[date] = 0;
+    }
+    let _t = orders[x].tickets;
+    let _order_total = 0;
+
+    for (let y in _t) {
+      _order_total += parseInt(_t[y].events.price);
+    }
+
+    revenue_date_data[date] += _order_total;
+  }
 
   let total_ticket_data = {
     total_ticket_price: 0,
@@ -291,6 +375,13 @@ export async function getServerSideProps(context) {
       },
     };
   } else {
-    return { props: { tickets, total_ticket_data, total_event_data } };
+    return {
+      props: {
+        tickets,
+        total_ticket_data,
+        total_event_data,
+        revenue_date_data,
+      },
+    };
   }
 }
