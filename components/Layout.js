@@ -60,9 +60,9 @@ export default function Layout({
               )}
 
               {session.user.access == "admin" && (
-                <Link href="/order/all">
+                <Link href="/order/search">
                   <div className="px-5 py-1 mx-2 my-1 font-bold text-center text-black bg-white rounded-full cursor-pointer">
-                    All Order
+                    Search Orders
                   </div>
                 </Link>
               )}
