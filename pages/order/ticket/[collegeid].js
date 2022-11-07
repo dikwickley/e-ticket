@@ -54,7 +54,7 @@ export default function OrderTickets({ tickets, collegeid, student_info }) {
               date={ticket.events.date}
               price={ticket.events.price}
               participants={ticket.participants}
-              order_id={ticket.order_id}
+              ticket_id={ticket._id}
             />
           );
         })}
@@ -90,7 +90,7 @@ const Tkt = ({
   date,
   price,
   participants,
-  order_id,
+  ticket_id,
 }) => {
   return (
     <div className="my-2 md:col-span-2 md:mt-0">
@@ -101,7 +101,7 @@ const Tkt = ({
               <label className="text-lg leading-none text-black">
                 {eventCode || "code"}
               </label>{" "}
-              <h1 className="font-extrabold text-transparent text-3xl bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 leading-none">
+              <h1 className="text-3xl font-extrabold leading-none text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
                 {name || "Event Name"}
               </h1>
             </div>
@@ -126,7 +126,7 @@ const Tkt = ({
           </div>
           <div className="flex flex-col items-end justify-end">
             <p className="mt-1 text-sm text-gray-600">Price {price} </p>
-            <p className="mt-1 text-sm text-gray-600">Order ID {order_id} </p>
+            <p className="mt-1 text-sm text-gray-600">Ticket ID {ticket_id} </p>
           </div>
         </div>
       </div>
