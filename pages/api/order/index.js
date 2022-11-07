@@ -18,11 +18,6 @@ export default async function handler(req, res) {
     return;
   }
 
-  if (session.user.access != "admin" && session.user.acces != "desk") {
-    res.status(400).json({ success: false, msg: "not auth" });
-    return;
-  }
-
   await dbConnect();
 
   switch (method) {
