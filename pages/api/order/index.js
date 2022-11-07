@@ -39,7 +39,7 @@ export default async function handler(req, res) {
         let student_phone = req.body.student_phone;
         let student_email = req.body.student_email;
         let student_collegeid = req.body.student_collegeid;
-        student_collegeid = student_collegeid.toLowerCase();
+        student_collegeid = student_collegeid.toUpperCase();
         let issue_date = req.body.issue_date;
         let transaction_id = req.body.transaction_id;
         let payment_mode = req.body.payment_mode;
@@ -56,6 +56,7 @@ export default async function handler(req, res) {
           for (var index in participants_data) {
             let _p = new Participant();
             _p.collegeid = participants_data[index].collegeid;
+            _p.collegeid = _p.collegeid.toUpperCase();
             _p.email = participants_data[index].email;
             _participant_emails.push(_p);
             _participants.push(_p);
