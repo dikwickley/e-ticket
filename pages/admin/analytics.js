@@ -31,7 +31,42 @@ export default function Analytics({
   total_ticket_data,
   total_event_data,
   revenue_date_data,
+  ticket_date_data,
 }) {
+  const ticket_per_day_options = {
+    responsive: true,
+    scales: {
+      x: {
+        ticks: {
+          autoSkip: false,
+          maxRotation: 90,
+          minRotation: 90,
+        },
+      },
+    },
+    plugins: {
+      tooltips: { enabled: true },
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: false,
+        text: "Chart.js Bar Chart",
+      },
+    },
+  };
+
+  const ticket_per_day_data = {
+    labels: Object.keys(ticket_date_data),
+    datasets: [
+      {
+        label: "Day Revenue",
+        data: Object.values(ticket_date_data),
+        backgroundColor: "#8800C7",
+      },
+    ],
+  };
+
   const revenue_per_day_options = {
     responsive: true,
     scales: {
@@ -59,7 +94,7 @@ export default function Analytics({
     labels: Object.keys(revenue_date_data),
     datasets: [
       {
-        label: "Day Revenue",
+        label: "Day Tickets",
         data: Object.values(revenue_date_data),
         backgroundColor: "rgb(75, 192, 192)",
       },
@@ -210,6 +245,24 @@ export default function Analytics({
                 <div className="px-4 py-3 text-right bg-gray-50 sm:px-6">
                   <div className="flex flex-col items-center">
                     <div className="self-center mb-10 text-2xl text-center">
+                      Tickets per day
+                    </div>
+                    <Bar
+                      options={ticket_per_day_options}
+                      data={ticket_per_day_data}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="my-10 md:grid md:grid-cols-1 md:gap-6">
+            <div className="mt-5 md:col-span-2 md:mt-0">
+              <div className="overflow-hidden shadow sm:rounded-md">
+                <div className="px-4 py-3 text-right bg-gray-50 sm:px-6">
+                  <div className="flex flex-col items-center">
+                    <div className="self-center mb-10 text-2xl text-center">
                       Participants per Event
                     </div>
                     <Bar
@@ -328,6 +381,7 @@ export async function getServerSideProps(context) {
   orders = JSON.parse(JSON.stringify(orders));
 
   let revenue_date_data = {};
+  let ticket_date_data = {};
 
   for (let x in orders) {
     let date = orders[x].issue_date.split("T")[0];
@@ -342,7 +396,15 @@ export async function getServerSideProps(context) {
     }
 
     revenue_date_data[date] += _order_total;
+
+    if (!ticket_date_data.hasOwnProperty(date)) {
+      ticket_date_data[date] = 0;
+    }
+
+    ticket_date_data[date] += orders[x].tickets.length;
   }
+
+  console.log({ ticket_date_data });
 
   let total_ticket_data = {
     total_ticket_price: 0,
@@ -381,6 +443,7 @@ export async function getServerSideProps(context) {
         total_ticket_data,
         total_event_data,
         revenue_date_data,
+        ticket_date_data,
       },
     };
   }
