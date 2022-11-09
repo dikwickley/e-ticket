@@ -97,6 +97,7 @@ export default function Analytics({
         label: "Day Revenue",
         data: Object.values(revenue_date_data),
         backgroundColor: "rgb(75, 192, 192)",
+        borderColor: "rgb(75, 192, 192)",
       },
     ],
   };
