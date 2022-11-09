@@ -60,7 +60,7 @@ export default function Analytics({
     labels: Object.keys(ticket_date_data),
     datasets: [
       {
-        label: "Day Revenue",
+        label: "Day Tickets",
         data: Object.values(ticket_date_data),
         backgroundColor: "#8800C7",
       },
@@ -94,7 +94,7 @@ export default function Analytics({
     labels: Object.keys(revenue_date_data),
     datasets: [
       {
-        label: "Day Tickets",
+        label: "Day Revenue",
         data: Object.values(revenue_date_data),
         backgroundColor: "rgb(75, 192, 192)",
       },
