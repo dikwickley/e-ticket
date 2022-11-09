@@ -31,6 +31,32 @@ export default async function handler(req, res) {
         res.status(400).json({ success: false, error: error });
       }
       break;
+    case "DELETE":
+      try {
+        if (session.user.access != "admin") {
+          res.status(400).json({ success: false, msg: "not admin" });
+          return;
+        }
+
+        let order_id = req.body.orderid;
+        console.log({ order_id });
+        // fetch all ticket ids from order_id
+
+        const _orders = await Order.findById(order_id);
+
+        if (!_orders) {
+          console.log("NO such order by id");
+          res.status(400).json({ success: false, msg: "not such order by id" });
+        }
+
+        res.status(200).json({ success: true });
+      } catch (error) {
+        console.log(error);
+        res.status(400).json({ success: false, error: error });
+      }
+
+      break;
+
     case "POST":
       try {
         let _tickets = [];

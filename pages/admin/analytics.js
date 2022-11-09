@@ -10,6 +10,7 @@ import {
   Legend,
   PointElement,
 } from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 Chart.register(
   CategoryScale,
   LinearScale,
@@ -18,8 +19,15 @@ Chart.register(
   PointElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  ChartDataLabels
 );
+Chart.defaults.set("plugins.datalabels", {
+  color: "rgba(0,0,0,0.5)",
+  rotation: 90,
+  align: "top",
+});
+
 import Layout from "../../components/Layout";
 import dbConnect from "../../util/db";
 import Ticket from "./../../models/Ticket.model";
@@ -62,7 +70,7 @@ export default function Analytics({
       {
         label: "Day Tickets",
         data: Object.values(ticket_date_data),
-        backgroundColor: "#8800C7",
+        backgroundColor: "#C3B1E1",
       },
     ],
   };

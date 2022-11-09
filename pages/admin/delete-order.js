@@ -8,36 +8,33 @@ export default function DeleteOrder() {
   const contentType = "application/json";
   const router = useRouter();
 
-  // const postData = async (data) => {
-  //   setLoading(true);
-  //   try {
-  //     const res = await fetch("/api/event", {
-  //       method: "POST",
-  //       headers: {
-  //         Accept: contentType,
-  //         "Content-Type": contentType,
-  //       },
-  //       body: JSON.stringify(data),
-  //     });
+  const deleteData = async (data) => {
+    setLoading(true);
 
-  //     console.log(res);
+    try {
+      const res = await fetch("/api/order", {
+        method: "DELETE",
+        headers: {
+          Accept: contentType,
+          "Content-Type": contentType,
+        },
+        body: JSON.stringify(data),
+      });
+      let response_data = await res.json();
+      setLoading(false);
+      if (response_data.success == false) {
+        alert("Error Occured. Contact Admin");
+      }
 
-  //     if (!res.ok) {
-  //       console.log(res.error);
-  //       throw new Error(res.status);
-  //     }
-  //     if (res.ok) {
-  //       alert("Event Added");
-  //       window.location.reload(false);
-  //     }
-  //     setLoading(false);
-
-  //     // router.push('/')
-  //   } catch (error) {
-  //     setLoading(false);
-  //     console.log(error);
-  //   }
-  // };
+      if (response_data.success == true) {
+        alert("Order and corresponding tickets deleted");
+      }
+      window.location.reload();
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
 
   const handleInput = (event) => {
     let inputname = event.target.name;
@@ -65,6 +62,7 @@ export default function DeleteOrder() {
         alert(`missing ${fields[x]}`);
         return;
       }
+    deleteData(data);
   };
 
   return (
@@ -103,7 +101,6 @@ export default function DeleteOrder() {
                 <div className="flex justify-end py-3 text-right items-centerpx-4 bg-gray-50 sm:px-6">
                   <button
                     type="submit"
-                    disabled
                     onClick={handleOrderDelete}
                     className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                   >
